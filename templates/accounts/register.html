@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <legend>Add new User</legend>
+        <form method="POST">
+            {% csrf_token %}
+            {{userform}}
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Next
+            </button>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div class="container" id="myModal">
+        <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 600px;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="batchTitle">Staff Profile</h5>
+              </div>
+              <div class="modal-body" id="body">
+                input fields here
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+<script type="text/javascript" src="{% static 'js/accounts/register.js' %}"></script>
+{% endblock %}
+
+{% block title %}
+Register
+{% endblock %}
