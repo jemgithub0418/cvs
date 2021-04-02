@@ -35,6 +35,7 @@ class StaffProfile(models.Model):
     gender = models.CharField(
         max_length= 1,
         choices=GENDER_CHOICES,
+        default='m',
         )
     employee_number= models.CharField(max_length= 15)
     date_of_birth = models.DateField()

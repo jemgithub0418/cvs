@@ -1,29 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 
 {% block content %}
-    <div class="container">
+    <div class="container" style="max-width: 600px;">
         <legend>Add new User</legend>
         <form method="POST">
             {% csrf_token %}
-            {{userform}}
+            {{userform | crispy}}
+            {{userstaffprofile |crispy}}
             <!-- Button trigger modal -->
+    <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Next
+              Continue
             </button>
         </form>
     </div>
 
+
+
+<!-- Modal -->
     <!-- Modal -->
-    <div class="container" id="myModal">
+    <div class="container" id="staffcreationmodal">
         <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 600px;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="batchTitle">Staff Profile</h5>
+                <h5 class="modal-title" id="title"></h5>
               </div>
               <div class="modal-body" id="body">
-                input fields here
+
               </div>
               <div class="modal-footer">
                 <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -32,7 +39,9 @@
           </div>
         </div>
     </div>
-<script type="text/javascript" src="{% static 'js/accounts/register.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/accounts/register.js' %}" ></script>
+
 {% endblock %}
 
 {% block title %}

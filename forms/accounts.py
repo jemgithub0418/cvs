@@ -1,5 +1,5 @@
 from django import forms
-from accounts.models import User
+from accounts.models import User, StaffProfile
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.db import transaction
 
@@ -9,7 +9,7 @@ class StaffCreationForm(UserCreationForm):
     email = forms.EmailField(
         max_length=254, help_text='Required. Please provide a valid email address.')
     user_level = forms.ChoiceField(
-        label='User Role', widget=forms.RadioSelect, choices=user_level_choices)
+        label='User Role', widget=forms.RadioSelect, choices=user_level_choices,)
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -35,6 +35,14 @@ class StaffCreationForm(UserCreationForm):
 
 
 class StaffUpdateForm(forms.ModelForm):
+    GENDER_CHOICES = [
+        ('m', 'Male'),
+        ('f', 'Female'),
+
+    ]
+    gender = forms.ChoiceField(
+        label='Gender', widget=forms.RadioSelect, choices=GENDER_CHOICES,)
+
     class Meta(StaffCreationForm.Meta):
         model = User
         fields = ['username', 'password', 'email', 'is_student',
@@ -42,3 +50,9 @@ class StaffUpdateForm(forms.ModelForm):
         labels = {
             'is_student' : 'Student', 'is_teacher' : 'Teacher', 'is_staff': 'Staff', 'is_registrar' : 'Registrar', 'is_superuser' : 'Administrator',
         }
+
+
+class StaffProfileCreationForm(forms.ModelForm):
+    class Meta:
+        model = StaffProfile
+        fields = ['first_name', 'middle_name', 'last_name', 'gender', 'employee_number', 'date_of_birth', 'mobile_number', 'address']
