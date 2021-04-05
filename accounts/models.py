@@ -12,14 +12,23 @@ class User(AbstractUser):
     is_teacher = models.BooleanField(default = False, verbose_name='Teacher')
     is_superuser = models.BooleanField(default = False, verbose_name= 'Administrator')
     is_registrar = models.BooleanField (default = False, verbose_name= 'Registrar')
+
+    email = models.EmailField(
+    max_length=254,
+    unique=True,
+    verbose_name='Email Address',
+    blank=True,
+    null=True,
+    )
+
     def __str__(self):
         return self.username
 
 
 class StaffProfile(models.Model):
     GENDER_CHOICES = [
-        ('m', 'Male'),
-        ('f', 'Female'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
 
     ]
     user = models.OneToOneField(
@@ -33,9 +42,9 @@ class StaffProfile(models.Model):
     middle_name = models.CharField(max_length=70,)
     last_name = models.CharField(max_length=70,)
     gender = models.CharField(
-        max_length= 1,
+        max_length= 6,
         choices=GENDER_CHOICES,
-        default='m',
+        default='Male',
         )
     employee_number= models.CharField(max_length= 15)
     date_of_birth = models.DateField()

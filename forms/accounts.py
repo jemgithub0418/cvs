@@ -2,14 +2,20 @@ from django import forms
 from accounts.models import User, StaffProfile
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.db import transaction
+import datetime
 
 class StaffCreationForm(UserCreationForm):
-    user_level_choices = [('registrar', 'Registrar'),
-                      ('teacher' , 'Teacher'), ('admin' , 'Administrator'), ]
+    user_level_choices = [
+        ('Teacher' , 'Teacher'),
+        ('Registrar', 'Registrar'),
+        ('Administrator' , 'Administrator'),
+    ]
     email = forms.EmailField(
         max_length=254, help_text='Required. Please provide a valid email address.')
     user_level = forms.ChoiceField(
-        label='User Role', widget=forms.RadioSelect, choices=user_level_choices,)
+        label='User Role', widget=forms.RadioSelect, choices=user_level_choices, initial='Teacher')
+
+
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -22,37 +28,77 @@ class StaffCreationForm(UserCreationForm):
         user = super().save(commit= False)
         user.is_staff = True
 
-        if level == 'registrar':
+        if level == 'Registrar':
             user.is_registrar = True
-        if level == 'teacher':
+        if level == 'Teacher':
             user.is_teacher= True
-        if level == 'admin':
+        if level == 'Administrator':
             user.is_superuser= True
         if commit:
             user.save()
         return user
 
 
-
-class StaffUpdateForm(forms.ModelForm):
-    GENDER_CHOICES = [
-        ('m', 'Male'),
-        ('f', 'Female'),
-
-    ]
-    gender = forms.ChoiceField(
-        label='Gender', widget=forms.RadioSelect, choices=GENDER_CHOICES,)
-
-    class Meta(StaffCreationForm.Meta):
-        model = User
-        fields = ['username', 'password', 'email', 'is_student',
-                    'is_teacher', 'is_staff', 'is_registrar', 'is_superuser',]
-        labels = {
-            'is_student' : 'Student', 'is_teacher' : 'Teacher', 'is_staff': 'Staff', 'is_registrar' : 'Registrar', 'is_superuser' : 'Administrator',
-        }
-
-
 class StaffProfileCreationForm(forms.ModelForm):
+    mobile_number = forms.CharField(widget=forms.TextInput(attrs={'placeholder': "917 123 1234"}),label="", max_length=15)
+    address = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}),)
+
+    today = datetime.date.today()
+    year = today.year
+    end = year - 120
+    days = 32
+    months = 13
+
+
+    day_choices = []
+    while days != 1:
+        day = days - 1
+        day_choices.append((day,day))
+        days = days - 1
+
+    month_choices = []
+    while months != 1:
+        month = months - 1
+        month_choices.append((month,month))
+        months = months - 1
+
+    year_choices = []
+    while year != end:
+        year_choices.append((year,year))
+        year -= 1
+
+
+    dob_day = forms.ChoiceField(
+            label='Day',
+            widget= forms.Select(attrs={'placeholder': 'Day'}),
+            choices=day_choices,
+            initial=1,
+
+        )
+
+    dob_month = forms.ChoiceField(
+            label='Month',
+            widget= forms.Select,
+            choices=month_choices,
+            initial= 1,
+        )
+
+    dob_year = forms.ChoiceField(
+            label = 'Year',
+            widget = forms.Select,
+            choices= year_choices,
+            initial = year,
+        )
+
+    date_of_birth = forms.CharField(
+            widget = forms.HiddenInput(),
+        )
+
     class Meta:
         model = StaffProfile
-        fields = ['first_name', 'middle_name', 'last_name', 'gender', 'employee_number', 'date_of_birth', 'mobile_number', 'address']
+        fields = ['first_name', 'middle_name', 'last_name', 'gender', 'employee_number', 'date_of_birth', 'mobile_number','dob_day','dob_month','dob_year','address', ]
+
+
+class StaffUpdateForm(forms.ModelForm):
+    pass
+

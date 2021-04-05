@@ -2,20 +2,51 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block style %}
 
+{% endblock %}
 {% block content %}
     <div class="container" style="max-width: 600px;">
         <legend>Add new User</legend>
-        <form method="POST">
+        <form method="POST" id="userform">
             {% csrf_token %}
-            {{userform | crispy}}
-            {{userstaffprofile |crispy}}
+            {{userform.username | as_crispy_field}}
+            {{userform.password1 | as_crispy_field}}
+            {{userform.password2 | as_crispy_field}}
+            {{userform.email | as_crispy_field}}
+            {{userform.user_level | as_crispy_field}}
+
+            {{userstaffprofile.first_name | as_crispy_field }}
+            {{userstaffprofile.middle_name | as_crispy_field }}
+            {{userstaffprofile.last_name | as_crispy_field }}
+            {{userstaffprofile.gender | as_crispy_field }}
+            {{userstaffprofile.employee_number | as_crispy_field }}
+
+            <div class="row" id="mobilenumberrow">
+                <label for="mobilenumberrow">Mobile Number*</label>
+                <div class="col-1" style="margin-top: 6px;"><span class="text-muted">+63</span></div>
+                <div class="col-11">
+                    {{userstaffprofile.mobile_number | as_crispy_field }}
+                </div>
+            </div>
+
+
+            <div class="row" id="dateofbirthrow">
+                <label for="dateofbirthrow">Date of Birth <small class="text-muted">MM/DD/YYYY</small></label>
+                <div class="col-5">{{userstaffprofile.dob_month | as_crispy_field}}</div>
+                <div class="col-2">{{userstaffprofile.dob_day | as_crispy_field}}</div>
+                <div class="col-5">{{userstaffprofile.dob_year | as_crispy_field}}</div>
+            </div>
+            {{userstaffprofile.address | as_crispy_field }}
+
+
+
             <!-- Button trigger modal -->
     <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Continue
+            <button type="button" id="reviewButton" onclick="popModal()" class="btn btn-primary mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Review Info
             </button>
-        </form>
+
     </div>
 
 
@@ -23,17 +54,20 @@
 <!-- Modal -->
     <!-- Modal -->
     <div class="container" id="staffcreationmodal">
-        <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 600px;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 600px; position:fixed; left:50%; transform: translate(-50%,0);" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="title"></h5>
               </div>
               <div class="modal-body" id="body">
+                    <div class="row">
 
+                    </div>
               </div>
               <div class="modal-footer">
-                <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Edit Information</button>
+                <button type="button" class="btn btn-primary" onclick="saveUser()" id="saveButton">Save</button>
               </div>
             </div>
           </div>
@@ -46,4 +80,8 @@
 
 {% block title %}
 Register
+{% endblock %}
+
+{% block script %}
+
 {% endblock %}
