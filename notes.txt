@@ -1,0 +1,10 @@
+dapat unique ang email - done
+
+mag add ng regex sa datefield at mobilenumgber field - done
+
+gawing auto username firstname+lastname
+gawing auto password
+
+capitalized dapat ung mga fields like first name etc
+
+hindi nag aappear sa modal ung data
