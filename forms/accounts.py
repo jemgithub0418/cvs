@@ -3,6 +3,30 @@ from accounts.models import User, StaffProfile
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.db import transaction
 import datetime
+import random, string
+
+def generate_password():
+    password = ''.join(random.choices(string.ascii_letters + string.digits , k=8))
+    return password
+
+
+def generate_username(first_name, last_name):
+    username = f'{first_name.replace(" ", ".")}.{last_name.replace(" ", ".")}'
+
+    if User.objects.filter(username = username).count() == 0:
+        return username
+    else:
+        while True:
+            additional_digits = random.choices(string.digits, k=2)
+            print(additional_digits)
+            for digits in additional_digits:
+                username += str(digits)
+            new_unique_username = username
+            if User.objects.filter(username = new_unique_username ).count() == 0:
+                username = new_unique_username
+                break
+        return username
+
 
 class StaffCreationForm(UserCreationForm):
     user_level_choices = [
@@ -19,7 +43,7 @@ class StaffCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ['username', 'password1', 'password2', 'email', 'user_level',]
+        fields = ['email', 'user_level',]
 
 
     @transaction.atomic

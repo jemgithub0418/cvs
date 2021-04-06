@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from forms import accounts
 from django.contrib import messages
+from forms.accounts import generate_password, generate_username
 
 
 def register(request):
@@ -17,18 +18,30 @@ def register(request):
         updated_request['date_of_birth'] = dob
         staffprofileform = accounts.StaffProfileCreationForm(updated_request)
 
-
+        #for auto generated password and username
+        password = generate_password()
+        first = updated_request['first_name']
+        last = updated_request['last_name']
+        generated_username = generate_username(first, last)
+        updated_request['username'] = generated_username
+        updated_request['password1'] = password
+        updated_request['password2'] = password
+        usercreationform = accounts.StaffCreationForm(updated_request)
+        print(password)
         if usercreationform.is_valid() and staffprofileform.is_valid():
-            user = usercreationform.save()
+            user = usercreationform.save(commit = False)
+            user.username = generated_username
+            user.save()
             userprofile = staffprofileform.save(commit=False)
             userprofile.user = user
             userprofile.save()
-            username = usercreationform.cleaned_data.get('username')
+            username = user.username
             messages.success(request, f'Account created for {username}!')
             return redirect('index')
         else:
             messages.error(request, "Invalid Form.")
             return redirect('accounts:register')
+
     else:
         usercreationform = accounts.StaffCreationForm()
         staffprofileform = accounts.StaffProfileCreationForm()

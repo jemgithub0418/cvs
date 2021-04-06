@@ -10,9 +10,6 @@
         <legend>Add new User</legend>
         <form method="POST" id="userform">
             {% csrf_token %}
-            {{userform.username | as_crispy_field}}
-            {{userform.password1 | as_crispy_field}}
-            {{userform.password2 | as_crispy_field}}
             {{userform.email | as_crispy_field}}
             {{userform.user_level | as_crispy_field}}
 

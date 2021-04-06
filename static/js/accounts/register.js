@@ -1,10 +1,14 @@
 
+function capitalize(e){
+    value = e.target.value
 
+    if(typeof value !== 'string') return ''
+    return value.charAt(0).toUpperCase() + value.slice(1)
+}
 
 function popModal(){
     var addnewstaff = document.getElementById('staffcreationmodal')
-    var username = document.getElementById('id_username').value
-    var password = document.getElementById('id_password1').value
+
     var email = document.getElementById('id_email').value
     var userLevel = document.querySelector('input[name="user_level"]:checked').value
     var gender = document.getElementById('id_gender').value
@@ -31,7 +35,7 @@ function popModal(){
 
 
 
-    if(username == null || username == '' || password == null || password == '' || email == null || email == '' || userLevel == null || userLevel == '' ||
+    if( email == null || email == '' || userLevel == null || userLevel == '' ||
         firstName == null || firstName == '' || middleName == null || middleName == '' || lastName == null || lastName == '' ||
          employeeNumber == null || employeeNumber == '' || mobileNumber == null || mobileNumber == '' || address == null || address == '' ){
         title.innerHTML = "Invalid!"
@@ -44,11 +48,11 @@ function popModal(){
         <div class="container">
             <div class="row" style="background-color: #f2f2f2;">
                 <div class="col-4">Username: </div>
-                <div class="col-6">${username}</div>
+                <div class="col-6">kingina mo</div>
             </div>
             <div class="row"">
                 <div class="col-4">Password: </div>
-                <div class="col-6"> ${password}</div>
+                <div class="col-6"> kingina mo</div>
             </div>
             <div class="row" style="background-color: #f2f2f2;">
                 <div class="col-4">Email: </div>
