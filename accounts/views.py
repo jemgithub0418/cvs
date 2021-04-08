@@ -2,6 +2,16 @@ from django.shortcuts import render, redirect
 from forms import accounts
 from django.contrib import messages
 from forms.accounts import generate_password, generate_username
+from .models import User, StaffProfile
+from serializers.accounts import StaffProfileDetailSerializer, CreateProfileSerializer, UserListSerializer, CreateStaffUserSerializer, UpdateStaffUserSerializer
+
+#rest
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.response import Response
+from rest_framework import generics
+from rest_framework.renderers import BrowsableAPIRenderer,TemplateHTMLRenderer
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 
 def register(request):
@@ -54,3 +64,50 @@ def register(request):
 
 def index(request):
     return render(request, 'index.html')
+
+
+
+
+########################################################################## api overview ###########################################################################
+@api_view(['GET'])
+def apiOverview(request):
+    api_urls = {
+        'Profile List/Create': 'accounts/api/user/profile/list/', #this is for creating users. I need to create user object and profile object at the same time
+        'User credentials Detail': 'accounts/api/user/detail/<int:id>/', #list lang to ng user objects (withour profile objects) pwede ka magupdate ng username dito at email
+        'Profile Update' : 'accounts/api/user/profile/detail/<int:pk>/', #for updating profile object and user object pero email lang ung mauupdate dito
+        'User List' : 'accounts/api/user/list/', #user list lang
+    }
+    return Response(api_urls)
+
+
+class UserProfileCreate(generics.ListCreateAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = CreateProfileSerializer
+    queryset = StaffProfile.objects.all()
+
+class UserProfileDetail(generics.RetrieveUpdateAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = StaffProfileDetailSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        userid = self.request.user.id
+        return StaffProfile.objects.filter(pk= userid)
+
+
+class UserList(generics.ListAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    queryset = User.objects.all()
+    serializer_class = UserListSerializer
+
+
+class UserUpdate(generics.RetrieveUpdateAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = UpdateStaffUserSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        userid = self.request.user.id
+        return User.objects.filter(pk= userid)

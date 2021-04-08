@@ -24,7 +24,6 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-
 class StaffProfile(models.Model):
     GENDER_CHOICES = [
         ('Male', 'Male'),
@@ -61,3 +60,7 @@ class StaffProfile(models.Model):
     def __str__(self):
         full_name = self.get_full_name()
         return full_name.strip()
+
+    def delete(self, *args, **kwargs):
+        self.user.delete()
+        super(StaffProfile, self).delete(*args, **kwargs)

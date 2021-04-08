@@ -12,9 +12,9 @@ def generate_password():
 
 def generate_username(first_name, last_name):
     username = f'{first_name.replace(" ", ".")}.{last_name.replace(" ", ".")}'
-
-    if User.objects.filter(username = username).count() == 0:
-        return username
+    username.lower()
+    if User.objects.filter(username__iexact = username).count() == 0:
+        return username.lower()
     else:
         while True:
             additional_digits = random.choices(string.digits, k=2)
@@ -22,10 +22,11 @@ def generate_username(first_name, last_name):
             for digits in additional_digits:
                 username += str(digits)
             new_unique_username = username
-            if User.objects.filter(username = new_unique_username ).count() == 0:
+            if User.objects.filter(username__iexact = new_unique_username ).count() == 0:
                 username = new_unique_username
                 break
-        return username
+
+        return username.lower()
 
 
 class StaffCreationForm(UserCreationForm):
@@ -117,6 +118,7 @@ class StaffProfileCreationForm(forms.ModelForm):
     date_of_birth = forms.CharField(
             widget = forms.HiddenInput(),
         )
+
 
     class Meta:
         model = StaffProfile
