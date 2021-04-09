@@ -1,10 +1,21 @@
 
-function capitalize(e){
-    value = e.target.value
-
-    if(typeof value !== 'string') return ''
-    return value.charAt(0).toUpperCase() + value.slice(1)
+// ######################### CSRF TOKEN
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }
+const csrftoken = getCookie('csrftoken');
 
 function popModal(){
     var addnewstaff = document.getElementById('staffcreationmodal')
@@ -18,97 +29,117 @@ function popModal(){
     var employeeNumber = document.getElementById('id_employee_number').value
     var mobileNumber = document.getElementById('id_mobile_number').value
     var address = document.getElementById('id_address').value
-
     var date_of_birth = document.getElementById('id_date_of_birth')
-
     var day = document.getElementById('id_dob_day').value
     var month = document.getElementById('id_dob_month').value
     var year = document.getElementById('id_dob_year').value
-
     var dobDisplay = month.concat("-", day, "-", year)
 
     addnewstaff.addEventListener('shown.bs.modal', function () {
-    title.innerHTML = ""
-    body.innerHTML = ""
+        title.innerHTML = ""
+        body.innerHTML = ""
 
 
+        if( email == null || email == '' || userLevel == null || userLevel == '' ||
+            firstName == null || firstName == '' || middleName == null || middleName == '' || lastName == null || lastName == '' ||
+             employeeNumber == null || employeeNumber == '' || mobileNumber == null || mobileNumber == '' || address == null || address == '' ){
+            title.innerHTML = "Invalid!"
+            body.innerHTML = "Please provide all needed information."
 
-
-
-    if( email == null || email == '' || userLevel == null || userLevel == '' ||
-        firstName == null || firstName == '' || middleName == null || middleName == '' || lastName == null || lastName == '' ||
-         employeeNumber == null || employeeNumber == '' || mobileNumber == null || mobileNumber == '' || address == null || address == '' ){
-        title.innerHTML = "Invalid!"
-        body.innerHTML = "Please provide all needed information."
-
-    }else{
-        title.innerHTML = `New User: ${firstName} ${lastName}`
-        body.innerHTML += `
-        <small class="text-muted">Please review all information before saving data.</small> <br/>
-        <div class="container">
-            <div class="row" style="background-color: #f2f2f2;">
-                <div class="col-4">Username: </div>
-                <div class="col-6">kingina mo</div>
+        }else{
+            title.innerHTML = `New User: ${firstName} ${lastName}`
+            body.innerHTML += `
+            <small class="text-muted">Please review all information before saving data. The username and password for this account will be sent to the email provided below.</small> <br/>
+            <div class="container">
+                <div class="row" style="background-color: #f2f2f2;">
+                    <div class="col-4">Email: </div>
+                    <div class="col-6">${email}</div>
+                </div>
+                <div class="row"">
+                    <div class="col-4">Role: </div>
+                    <div class="col-6"> ${userLevel}</div>
+                </div>
+                <div class="row" style="background-color: #f2f2f2;">
+                    <div class="col-4">First Name: </div>
+                    <div class="col-6">${firstName}</div>
+                </div>
+                <div class="row"">
+                    <div class="col-4">Middle Name: </div>
+                    <div class="col-6"> ${middleName}</div>
+                </div>
+                <div class="row" style="background-color: #f2f2f2;">
+                    <div class="col-4">Last Name: </div>
+                    <div class="col-6">${lastName}</div>
+                </div>
+                <div class="row"">
+                    <div class="col-4">Gender: </div>
+                    <div class="col-6"> ${gender}</div>
+                </div>
+                <div class="row" style="background-color: #f2f2f2;">
+                    <div class="col-4">Employee Number: </div>
+                    <div class="col-6">${employeeNumber}</div>
+                </div>
+                <div class="row"">
+                    <div class="col-4">Date of Birth: </div>
+                    <div class="col-6"> ${dobDisplay}</div>
+                </div>
+                <div class="row" style="background-color: #f2f2f2;">
+                    <div class="col-4">Mobile Number: </div>
+                    <div class="col-6">${mobileNumber}</div>
+                </div>
+                <div class="row"">
+                    <div class="col-4">Address: </div>
+                    <div class="col-6"> ${address}</div>
+                </div>
             </div>
-            <div class="row"">
-                <div class="col-4">Password: </div>
-                <div class="col-6"> kingina mo</div>
-            </div>
-            <div class="row" style="background-color: #f2f2f2;">
-                <div class="col-4">Email: </div>
-                <div class="col-6">${email}</div>
-            </div>
-            <div class="row"">
-                <div class="col-4">Role: </div>
-                <div class="col-6"> ${userLevel}</div>
-            </div>
-            <div class="row" style="background-color: #f2f2f2;">
-                <div class="col-4">First Name: </div>
-                <div class="col-6">${firstName}</div>
-            </div>
-            <div class="row"">
-                <div class="col-4">Middle Name: </div>
-                <div class="col-6"> ${middleName}</div>
-            </div>
-            <div class="row" style="background-color: #f2f2f2;">
-                <div class="col-4">Last Name: </div>
-                <div class="col-6">${lastName}</div>
-            </div>
-            <div class="row"">
-                <div class="col-4">Gender: </div>
-                <div class="col-6"> ${gender}</div>
-            </div>
-            <div class="row" style="background-color: #f2f2f2;">
-                <div class="col-4">Employee Number: </div>
-                <div class="col-6">${employeeNumber}</div>
-            </div>
-            <div class="row"">
-                <div class="col-4">Date of Birth: </div>
-                <div class="col-6"> ${dobDisplay}</div>
-            </div>
-            <div class="row" style="background-color: #f2f2f2;">
-                <div class="col-4">Mobile Number: </div>
-                <div class="col-6">${mobileNumber}</div>
-            </div>
-            <div class="row"">
-                <div class="col-4">Address: </div>
-                <div class="col-6"> ${address}</div>
-            </div>
-        </div>
-        `
-    }
+            `
+        }
     })
+
+    try{
+        var usercreationform = document.getElementById('userform')
+        usercreationform.addEventListener('submit', function(e){
+        e.preventDefault()
+
+        fetch(`http://localhost:8000/accounts/api/user/profile/create/`,{
+
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({
+                'email':email,
+                // 'userlevel':userLevel,
+                'gender':gender,
+                'fist_name':firstName,
+                'middle_name':middleName,
+                'last_name':lastName,
+                'employee_number':employeeNumber,
+                'mobile_number':mobileNumber,
+                'address':address,
+                'dob_day': day,
+                'dob_month':month,
+                'dob_year': year,
+                'date_of_birth': date_of_birth,
+            })
+            }).then(function(response){
+                console.log("user created")
+                document.getElementById('userform').reset()
+        })
+
+
+    })
+    }catch(error){
+        console.log(error)
+    }
 }
-
-
-
-// reviewButton.addEventListener("click", (function(){
-//     return function(){
-//         reviewInfo()
-//     }
-// }))
 
 
 function saveUser(){
-    document.getElementById('userform').submit()
+    var form = document.getElementById('userform')
+    form.dispatchEvent(new Event('submit'));
 }
+
+
+

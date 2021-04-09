@@ -35,14 +35,13 @@
                 <div class="col-5">{{userstaffprofile.dob_year | as_crispy_field}}</div>
             </div>
             {{userstaffprofile.address | as_crispy_field }}
+        </form>
 
 
-
-            <!-- Button trigger modal -->
-    <!-- Button trigger modal -->
-            <button type="button" id="reviewButton" onclick="popModal()" class="btn btn-primary mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Review Info
-            </button>
+        <!-- Button trigger modal -->
+        <button type="button" id="reviewButton" onclick="popModal()" class="btn btn-primary mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Review Info
+        </button>
 
     </div>
 
@@ -64,7 +63,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Edit Information</button>
-                <button type="button" class="btn btn-primary" onclick="saveUser()" id="saveButton">Save</button>
+                <button type="button" onClick="saveUser()" class="btn btn-primary" id="saveButton">Save</button>
               </div>
             </div>
           </div>

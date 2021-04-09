@@ -10,7 +10,7 @@ urlpatterns = [
     path('api/', apiOverview, name='apioverview'),
 
     #staff profile api
-    path('api/user/profile/create/', UserProfileCreate.as_view(), name='userprofile-list'),
+    path('api/user/profile/create/', UserProfileCreate.as_view(), name='userprofile-create'),
     path('api/user/profile/detail/<int:pk>/', UserProfileDetail.as_view(), name='userprofile-detail'),
 
     #user api
