@@ -64,3 +64,9 @@ class StaffProfile(models.Model):
     def delete(self, *args, **kwargs):
         self.user.delete()
         super(StaffProfile, self).delete(*args, **kwargs)
+
+
+class Blog(models.Model):
+    title_title = models.CharField(max_length=256)
+    content_title = models.TextField()
+    author_title = models.CharField(max_length=256)

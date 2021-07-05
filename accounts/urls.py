@@ -1,6 +1,6 @@
 from django.urls import path
 from accounts.views import (
-    register, apiOverview, UserProfileCreate, UserProfileDetail, UserList, UserUpdate,
+    register, apiOverview, UserProfileCreate, UserProfileDetail, UserList, UserUpdate, BlogCreate
     )
 
 app_name = 'accounts'
@@ -16,5 +16,10 @@ urlpatterns = [
     #user api
     path('api/user/list/', UserList.as_view(), name='user-list'),
     path('api/user/detail/<int:pk>/', UserUpdate.as_view(), name='user-update'),
+
+
+
+    #sample lang
+    path('api/blog/create/', BlogCreate.as_view(), name='blog-create'),
 
 ]

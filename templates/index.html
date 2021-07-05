@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
     home
+
+    <div class="container">
+        sample api post method. just to check if code is working
+
+        <form id="blogform">
+            title: <input type="text" name="title" id="title">
+            content: <input type="text" name="content" id="content">
+            author: <input type="text" name="author" id="author">
+            <input type="submit" name="" value="add">
+        </form>
+    </div>
 </div>
+
+
+<script type="text/javascript" src="{% static 'js/accounts/home.js' %}" ></script>
 {% endblock %}

@@ -21,7 +21,7 @@ function popModal(){
     var addnewstaff = document.getElementById('staffcreationmodal')
 
     var email = document.getElementById('id_email').value
-    var userLevel = document.querySelector('input[name="user_level"]:checked').value
+    var userLevel = document.getElementById('id_user_level').value
     var gender = document.getElementById('id_gender').value
     var firstName = document.getElementById('id_first_name').value
     var middleName = document.getElementById('id_middle_name').value
@@ -99,10 +99,10 @@ function popModal(){
     try{
         var usercreationform = document.getElementById('userform')
         usercreationform.addEventListener('submit', function(e){
+
         e.preventDefault()
-
-        fetch(`http://localhost:8000/accounts/api/user/profile/create/`,{
-
+        var url = "http://localhost:8000/accounts/api/user/profile/create/"
+        fetch(url,{
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
@@ -110,9 +110,9 @@ function popModal(){
             },
             body: JSON.stringify({
                 'email':email,
-                // 'userlevel':userLevel,
+                'userlevel':userLevel,
                 'gender':gender,
-                'fist_name':firstName,
+                'first_name':firstName,
                 'middle_name':middleName,
                 'last_name':lastName,
                 'employee_number':employeeNumber,
@@ -121,12 +121,18 @@ function popModal(){
                 'dob_day': day,
                 'dob_month':month,
                 'dob_year': year,
-                'date_of_birth': date_of_birth,
             })
             }).then(function(response){
-                console.log("user created")
-                document.getElementById('userform').reset()
-        })
+                if (response.ok) {
+                    document.getElementById('userform').reset()
+                    return response.json();
+                }
+                return Promise.reject(response);
+            }).then(function(data){
+                console.log(data);
+            }).catch(function(error){
+                console.log(error)
+            })
 
 
     })

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from accounts.models import User, StaffProfile
+from accounts.models import User, StaffProfile, Blog
 import datetime
 from forms.accounts import generate_password, generate_username
 from django.db import transaction
@@ -196,3 +196,8 @@ class UpdateStaffUserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'is_active', 'is_staff', 'is_student', 'is_teacher', 'is_registrar', 'is_superuser','last_login', 'date_joined',]
         read_only_fields = ('date_joined', 'last_login', 'is_active', 'is_staff', 'is_student', 'is_teacher', 'is_registrar', 'is_superuser')
 
+
+class BlogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = '__all__'

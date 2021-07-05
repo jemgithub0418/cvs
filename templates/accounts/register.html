@@ -8,8 +8,7 @@
 {% block content %}
     <div class="container" style="max-width: 600px;">
         <legend>Add new User</legend>
-        <form method="POST" id="userform">
-            {% csrf_token %}
+        <form id="userform">
             {{userform.email | as_crispy_field}}
             {{userform.user_level | as_crispy_field}}
 
@@ -35,6 +34,7 @@
                 <div class="col-5">{{userstaffprofile.dob_year | as_crispy_field}}</div>
             </div>
             {{userstaffprofile.address | as_crispy_field }}
+
         </form>
 
 
@@ -81,3 +81,5 @@ Register
 {% block script %}
 
 {% endblock %}
+
+

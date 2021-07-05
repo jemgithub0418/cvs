@@ -2,8 +2,15 @@ from django.shortcuts import render, redirect
 from forms import accounts
 from django.contrib import messages
 from forms.accounts import generate_password, generate_username
-from .models import User, StaffProfile
-from serializers.accounts import StaffProfileDetailSerializer, CreateProfileSerializer, UserListSerializer, CreateStaffUserSerializer, UpdateStaffUserSerializer
+from .models import User, StaffProfile, Blog
+from serializers.accounts import (
+    StaffProfileDetailSerializer,
+    CreateProfileSerializer,
+    UserListSerializer,
+    CreateStaffUserSerializer,
+    UpdateStaffUserSerializer,
+    BlogSerializer,
+    )
 
 #rest
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -111,3 +118,10 @@ class UserUpdate(generics.RetrieveUpdateAPIView):
     def get_queryset(self, *args, **kwargs):
         userid = self.request.user.id
         return User.objects.filter(pk= userid)
+
+
+class BlogCreate(generics.ListCreateAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = BlogSerializer
+    queryset = Blog.objects.all()

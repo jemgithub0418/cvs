@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, StaffProfile
+from .models import User, StaffProfile, Blog
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from forms import accounts
@@ -44,7 +44,7 @@ class StaffProfileAdmin(admin.ModelAdmin):
     def has_add_permission(self, request, obj=None):
         return False
 
-
+admin.site.register(Blog)
 admin.site.register(User, UserAdmin)
 admin.site.register(StaffProfile, StaffProfileAdmin)
 admin.site.unregister(Group)
