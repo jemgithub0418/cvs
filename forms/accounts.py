@@ -38,7 +38,7 @@ class StaffCreationForm(UserCreationForm):
     email = forms.EmailField(
         max_length=254, help_text='Required. Please provide a valid email address.')
     user_level = forms.ChoiceField(
-        label='User Role', widget=forms.RadioSelect, choices=user_level_choices, initial='Teacher')
+        label='User Role', widget=forms.Select, choices=user_level_choices, initial='Teacher')
 
 
 
@@ -47,21 +47,21 @@ class StaffCreationForm(UserCreationForm):
         fields = ['email', 'user_level',]
 
 
-    @transaction.atomic
-    def save(self, commit = True):
-        level = self.cleaned_data['user_level']
-        user = super().save(commit= False)
-        user.is_staff = True
+    # @transaction.atomic
+    # def save(self, commit = True):
+    #     level = self.cleaned_data['user_level']
+    #     user = super().save(commit= False)
+    #     user.is_staff = True
 
-        if level == 'Registrar':
-            user.is_registrar = True
-        if level == 'Teacher':
-            user.is_teacher= True
-        if level == 'Administrator':
-            user.is_superuser= True
-        if commit:
-            user.save()
-        return user
+    #     if level == 'Registrar':
+    #         user.is_registrar = True
+    #     if level == 'Teacher':
+    #         user.is_teacher= True
+    #     if level == 'Administrator':
+    #         user.is_superuser= True
+    #     if commit:
+    #         user.save()
+    #     return user
 
 
 class StaffProfileCreationForm(forms.ModelForm):

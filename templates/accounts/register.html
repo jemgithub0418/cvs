@@ -8,8 +8,7 @@
 {% block content %}
     <div class="container" style="max-width: 600px;">
         <legend>Add new User</legend>
-        <form method="POST" id="userform">
-            {% csrf_token %}
+        <form id="userform">
             {{userform.email | as_crispy_field}}
             {{userform.user_level | as_crispy_field}}
 
@@ -36,13 +35,13 @@
             </div>
             {{userstaffprofile.address | as_crispy_field }}
 
+        </form>
 
 
-            <!-- Button trigger modal -->
-    <!-- Button trigger modal -->
-            <button type="button" id="reviewButton" onclick="popModal()" class="btn btn-primary mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Review Info
-            </button>
+        <!-- Button trigger modal -->
+        <button type="button" id="reviewButton" onclick="popModal()" class="btn btn-primary mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Review Info
+        </button>
 
     </div>
 
@@ -64,7 +63,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Edit Information</button>
-                <button type="button" class="btn btn-primary" onclick="saveUser()" id="saveButton">Save</button>
+                <button type="submit" onClick="saveUser()" class="btn btn-primary" id="saveButton">Save</button>
               </div>
             </div>
           </div>
@@ -82,3 +81,5 @@ Register
 {% block script %}
 
 {% endblock %}
+
+
