@@ -102,6 +102,7 @@ function popModal(){
 
         e.preventDefault()
         var url = "http://localhost:8000/accounts/api/user/profile/create/"
+
         fetch(url,{
             method: 'POST',
             headers: {
@@ -109,32 +110,30 @@ function popModal(){
                 'X-CSRFToken': csrftoken,
             },
             body: JSON.stringify({
-                'email':email,
-                'userlevel':userLevel,
-                'gender':gender,
-                'first_name':firstName,
-                'middle_name':middleName,
-                'last_name':lastName,
-                'employee_number':employeeNumber,
-                'mobile_number':mobileNumber,
-                'address':address,
-                'dob_day': day,
-                'dob_month':month,
-                'dob_year': year,
-            })
-            }).then(function(response){
-                if (response.ok) {
-                    document.getElementById('userform').reset()
-                    return response.json();
-                }
-                return Promise.reject(response);
-            }).then(function(data){
-                console.log(data);
-            }).catch(function(error){
-                console.log(error)
-            })
+                // check raw data tab on api for format
+                    'user': {
+                        'password': null,
+                        'email':email,
+                        'userlevel': userLevel ,
+                    },
+                    'gender': gender,
+                    'first_name': firstName,
+                    'middle_name': middleName,
+                    'last_name': lastName,
+                    'employee_number': employeeNumber,
+                    'mobile_number': mobileNumber,
+                    'dob_month': month,
+                    'dob_day': day,
+                    'dob_year': year,
+                    'address': address,
+                })
 
-
+            }).then(response => {
+                return response.json()
+            }).then(data=> {
+                console.log(data)
+            })
+        e.target.reset()
     })
     }catch(error){
         console.log(error)

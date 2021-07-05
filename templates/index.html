@@ -12,8 +12,33 @@
             title: <input type="text" name="title" id="title">
             content: <input type="text" name="content" id="content">
             author: <input type="text" name="author" id="author">
-            <input type="submit" name="" value="add">
+            <button type="button" id="reviewButton" onclick="popBlogModal()" class="btn btn-primary mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Review Info
+            </button>
         </form>
+            <!-- Modal -->
+        <div class="container" id="blogmodal">
+            <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 600px; position:fixed; left:50%; transform: translate(-50%,0);" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modaltitle">
+
+                    </h5>
+                  </div>
+                  <div class="modal-body" id="body">
+                        <div class="row">
+
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Edit Information</button>
+                    <button type="submit" onClick="saveUser()" class="btn btn-primary" id="saveButton" data-dismiss="modal">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
     </div>
 </div>
 
