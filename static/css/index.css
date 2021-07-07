@@ -1,0 +1,15 @@
+{% load static %}
+
+body, html{
+
+}
+
+.bg{
+    height: 30rem;
+}
+
+.bg img{
+    width: 100%;
+    height: 30rem;
+}
+

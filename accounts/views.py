@@ -69,12 +69,6 @@ def register(request):
     return render(request, 'accounts/register.html', context)
 
 
-def index(request):
-    return render(request, 'index.html')
-
-
-
-
 ########################################################################## api overview ###########################################################################
 @api_view(['GET'])
 def apiOverview(request):
