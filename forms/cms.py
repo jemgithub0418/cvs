@@ -5,4 +5,4 @@ from cms.models import SchoolLogo
 class ChangeLogoForm(forms.ModelForm):
     class Meta:
         model = SchoolLogo
-        fields = ["image"]
+        fields = "__all__"
