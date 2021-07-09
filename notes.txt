@@ -2,18 +2,11 @@ dapat unique ang email - done
 
 mag add ng regex sa datefield at mobilenumgber field - done
 
-gawing auto username firstname+lastname ok na to pero may tweak pa kailangan gawin lowercase dapat DONE
-gawing auto password done
-
-hindi nag aappear sa modal ung data DONE
-
-ayusin ung user role in api view DONE
-
-ung pag update ng email nag eerror sa api DONE
-
 
 capitalized dapat ung mga fields like first name etc
 
 
 
 ung logout button gawing dropdown, andun na ung account settings change pass edit profile at log out function
+
+hindi nag cclose ung modal kapag save ng new user
