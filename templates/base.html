@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{% static './css/navbar.css/' %}">
     {% block style %}
     {% endblock %}
-    <title>CVS | {% block title %}{% endblock %}</title>
+    <title>{% block title %}CVS{% endblock %}</title>
   </head>
   <body>
     {% include 'navbar.html' %}
