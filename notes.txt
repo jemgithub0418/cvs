@@ -10,3 +10,5 @@ capitalized dapat ung mga fields like first name etc
 ung logout button gawing dropdown, andun na ung account settings change pass edit profile at log out function
 
 hindi nag cclose ung modal kapag save ng new user
+
+di maayos ung pag delete ng existing image sa schoologo model. dapat nadedelete ung current pag upload ng new logo

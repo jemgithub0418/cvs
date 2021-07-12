@@ -1,5 +1,47 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
+{% load static %}
+{% block script %}
+    <script type="text/javascript" src="{% static 'js/cms/cms.js' %}"></script>
+{% endblock %}
 {% block content %}
-    <a href="{% url 'change-logo'%}">change school logo</a>
+<div class="container">
+    <h3>Manage Site Contents</h3>
+    <div class="row">
+        <div class="col-3" style="position: fixed;">  
+            <div class="list-group">
+                <button class="list-group-item list-group-item-action active" aria-current="true" onClick="showHomeContent()" id="homeButton">Home</button>
+                <button class="list-group-item list-group-item-action" aria-current="true" onClick="showAboutContent()" id="aboutButton">About</button>
+                <a href="#" class="list-group-item list-group-item-action">Contact Us</a>
+                <a href="#" class="list-group-item list-group-item-action">Sample Page</a>
+                <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">A disabled link item</a>
+
+            </div>
+        </div>
+        <div class="col-9" style="margin-left: 23rem;">
+            <div class="page-content" id="page-content">
+                <h6>School Logo</h6>
+                <div class="card" style="width: 100%">
+                    <small class="card-body">In use:</small>
+                    <img src="{{logo.image.url}}" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;">
+                    <div class="card-body">
+                        <small>Change:</small>
+                    <form action="{% url 'change-logo' %}" method="POST"  enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="file" name="image" class="form-control" id="inputGroupFile02">
+                            <button type="submit" class="input-group-text" for="inputGroupFile02">Upload
+                            </button>
+                        </div>             
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var csrf = "{{ csrf_token }}"
+</script>
 {% endblock %}

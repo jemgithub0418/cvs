@@ -1,20 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from forms.cms import ChangeLogoForm
 from .models import SchoolLogo
 
 # Create your views here.
 
 def contentmanagement(request):
-    return render(request, 'cms/content-management.html')
+    logoform = ChangeLogoForm()
+    context = {
+        'logoform': logoform,
+    }
+    return render(request, 'cms/content-management.html', context)
 
 def changelogo(request):
     if request.method == "POST":
-        form = ChangeLogoForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+        image = request.FILES.get('image')
+        new_logo = SchoolLogo(image=image)
+        new_logo.save()
     else:
         form = ChangeLogoForm()
-    context={
-        'form': form,
-    }
-    return render(request, 'cms/change-logo.html', context)
+    return redirect('cms')
