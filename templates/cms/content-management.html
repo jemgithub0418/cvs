@@ -8,7 +8,7 @@
 <div class="container">
     <h3>Manage Site Contents</h3>
     <div class="row">
-        <div class="col-3" style="position: fixed;">  
+        <div class="col-2" style="position: fixed;">
             <div class="list-group">
                 <button class="list-group-item list-group-item-action active" aria-current="true" onClick="showHomeContent()" id="homeButton">Home</button>
                 <button class="list-group-item list-group-item-action" aria-current="true" onClick="showAboutContent()" id="aboutButton">About</button>
@@ -29,7 +29,7 @@
                     <form action="{% url 'change-logo' %}" method="POST"  enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="input-group mb-3">
-                            <input type="file" name="image" class="form-control" id="inputGroupFile02">
+                            <input type="file" name="image" class="form-control" required id="inputGroupFile02">
                             <button type="submit" class="input-group-text" for="inputGroupFile02">Upload
                             </button>
                         </div>             
@@ -42,6 +42,9 @@
 </div>
 
 <script type="text/javascript">
-    var csrf = "{{ csrf_token }}"
+    const csrftoken = "{{csrf_token}}"
+    //home contents
+    var changeLogoUrlView = "{% url 'change-logo' %}"
+    var schoolLogo = "{{logo.image.url|safe}}";
 </script>
 {% endblock %}

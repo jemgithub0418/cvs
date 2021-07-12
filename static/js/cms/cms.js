@@ -10,18 +10,16 @@ function showHomeContent(){
     if ( document.getElementById("aboutButton").className.match(/(?:^|\s)active(?!\S)/) ){
         document.getElementById("aboutButton").classList.remove('active')
     }
-    
-
-
+    console.log(csrftoken);
     pageContent.innerHTML = `
         <h6>School Logo</h6>
         <div class="card" style="width: 100%">
             <small class="card-body">In use:</small>
-            <img src="{{logo.image.url}}" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;">
+            <img src="${schoolLogo}" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;">
             <div class="card-body">
                 <small>Change:</small>
-            <form action="{% url 'change-logo' %}" method="POST"  enctype="multipart/form-data">
-                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" >
+            <form action="${changeLogoUrlView}" method="POST"  enctype="multipart/form-data">
+                <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}" >
                 <div class="input-group mb-3">
                     <input type="file" name="image" class="form-control" id="inputGroupFile02">
                     <button type="submit" class="input-group-text" for="inputGroupFile02">Upload

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from forms.cms import ChangeLogoForm
 from .models import SchoolLogo
-
 # Create your views here.
+
+
 
 def contentmanagement(request):
     logoform = ChangeLogoForm()
