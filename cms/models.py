@@ -39,5 +39,9 @@ class HomeCarousel(models.Model):
     label = models.CharField(max_length = 255)
     content = models.CharField(max_length= 255)
 
+
+    class Meta:
+        verbose_name_plural = 'Home Page Carousel'
+
     def __str__(self):
         return self.label

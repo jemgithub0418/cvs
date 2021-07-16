@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SchoolLogo
+from .models import SchoolLogo, HomeCarousel
 
 class SchoolLogoAdmin(admin.ModelAdmin):
     actions = ['change']
@@ -10,3 +10,4 @@ class SchoolLogoAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(SchoolLogo, SchoolLogoAdmin)
+admin.site.register(HomeCarousel)
