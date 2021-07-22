@@ -1,6 +1,5 @@
 
 const pageContent = document.getElementById('page-content')
-var logoform = document.getElementById('logo-form')
 const imageDiv = document.getElementById('imgHolder')
 
 handleLogoForm();
@@ -12,25 +11,6 @@ function changeLogo(){
     fetch(url)
     .then((response) => response.json())
     .then(function(data){
-
-        // pageContent.innerHTML = `
-        //     <div class="card" id="school-logo">
-        //         <div class="card-body">
-        //             <h5>School Logo</h5>
-        //             <small>On display:</small> <br>
-        //             <img src="${data[0].image}" id="img" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br> 
-        //             <small>Change:</small>
-        //         <form action="http://localhost:8000/web-content/api/changelogo/" method="POST"  enctype="multipart/form-data" id="logo-form">
-        //             <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}" >
-        //             <div class="input-group mb-3">
-        //                 <input type="file" name="image" class="form-control" required id="inputGroupFile02">
-        //                 <button type="submit" class="input-group-text" for="inputGroupFile02">Upload
-        //                 </button>
-        //             </div>             
-        //         </form>
-        //         </div>
-        //     </div>
-        // `
 
         imageDiv.innerHTML = `
             <img src="${data[0].image}" id="img" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br> 
@@ -64,6 +44,7 @@ function getLogoCard(){
                 </div>
             </div>
         `
+        handleLogoForm()
 
     })
 }
@@ -76,6 +57,7 @@ function getLogoCard(){
 // change logo
 
 function handleLogoForm(){
+    var logoform = document.getElementById('logo-form')
     logoform.addEventListener('submit', function(e){
         e.preventDefault()
         let input = document.getElementById('inputGroupFile02');
@@ -96,6 +78,7 @@ function handleLogoForm(){
         .then(function(data){
             changeLogo()
             e.target.reset()
+            handleLogoForm.call(this);
             logo = document.getElementById('logo-div')
             logo.innerHTML = ""
             logo.innerHTML = `<img src="${data.image}" alt="no image provided" style="max-width: 7rem; max-height: 7rem;">`
@@ -117,10 +100,9 @@ function showHomeContent(){
     if ( document.getElementById("aboutButton").className.match(/(?:^|\s)active(?!\S)/) ){
         document.getElementById("aboutButton").classList.remove('active')
     }
-    handleLogoForm()
     pageContent.innerHTML = ""
     getLogoCard()
-    handleLogoForm()
+
 }
 
 function showAboutContent(){
