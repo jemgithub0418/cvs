@@ -1,35 +1,126 @@
+
 const pageContent = document.getElementById('page-content')
-var homeButtonClass = document.getElementById('homeButton').classList
+var logoform = document.getElementById('logo-form')
+const imageDiv = document.getElementById('imgHolder')
+
+handleLogoForm();
+
+// Getting Home Page Contents
+function changeLogo(){
+    var url = "http://localhost:8000/web-content/api/changelogo/"
+
+    fetch(url)
+    .then((response) => response.json())
+    .then(function(data){
+
+        // pageContent.innerHTML = `
+        //     <div class="card" id="school-logo">
+        //         <div class="card-body">
+        //             <h5>School Logo</h5>
+        //             <small>On display:</small> <br>
+        //             <img src="${data[0].image}" id="img" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br> 
+        //             <small>Change:</small>
+        //         <form action="http://localhost:8000/web-content/api/changelogo/" method="POST"  enctype="multipart/form-data" id="logo-form">
+        //             <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}" >
+        //             <div class="input-group mb-3">
+        //                 <input type="file" name="image" class="form-control" required id="inputGroupFile02">
+        //                 <button type="submit" class="input-group-text" for="inputGroupFile02">Upload
+        //                 </button>
+        //             </div>             
+        //         </form>
+        //         </div>
+        //     </div>
+        // `
+
+        imageDiv.innerHTML = `
+            <img src="${data[0].image}" id="img" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br> 
+
+        `
+    })
+}
+
+function getLogoCard(){
+    var url = "http://localhost:8000/web-content/api/changelogo/"
+
+    fetch(url)
+    .then((response) => response.json())
+    .then(function(data){
+
+        pageContent.innerHTML = `
+            <div class="card" id="school-logo">
+                <div class="card-body">
+                    <h5>School Logo</h5>
+                    <small>On display:</small> <br>
+                    <img src="${data[0].image}" id="img" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br> 
+                    <small>Change:</small>
+                <form action="http://localhost:8000/web-content/api/changelogo/" method="POST"  enctype="multipart/form-data" id="logo-form">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}" >
+                    <div class="input-group mb-3">
+                        <input type="file" name="image" class="form-control" required id="inputGroupFile02">
+                        <button type="submit" class="input-group-text" for="inputGroupFile02">Upload
+                        </button>
+                    </div>             
+                </form>
+                </div>
+            </div>
+        `
+
+    })
+}
+
+
+
+
+
+// formsssssss
+// change logo
+
+function handleLogoForm(){
+    logoform.addEventListener('submit', function(e){
+        e.preventDefault()
+        let input = document.getElementById('inputGroupFile02');
+
+        let data = new FormData();
+        data.append('image',input.files[0]);
+
+        var url = "http://localhost:8000/web-content/api/changelogo/"
+
+        fetch(url,{
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrftoken,
+            },
+            body:data
+        })
+        .then((response) => response.json())
+        .then(function(data){
+            changeLogo()
+            e.target.reset()
+            logo = document.getElementById('logo-div')
+            logo.innerHTML = ""
+            logo.innerHTML = `<img src="${data.image}" alt="no image provided" style="max-width: 7rem; max-height: 7rem;">`
+        })
+    })
+}
+
+
+
+
+
 
 function showHomeContent(){
     if ( document.getElementById("homeButton").className.match(/(?:^|\s)active(?!\S)/) ){
-        return;
+
     }else{
         document.getElementById('homeButton').classList.add('active')
     }
     if ( document.getElementById("aboutButton").className.match(/(?:^|\s)active(?!\S)/) ){
         document.getElementById("aboutButton").classList.remove('active')
     }
-    console.log(csrftoken);
-    pageContent.innerHTML = `
-        <h6>School Logo</h6>
-        <div class="card" style="width: 100%">
-            <small class="card-body">In use:</small>
-            <img src="${schoolLogo}" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;">
-            <div class="card-body">
-                <small>Change:</small>
-            <form action="${changeLogoUrlView}" method="POST"  enctype="multipart/form-data">
-                <input type="hidden" name="csrfmiddlewaretoken" value="${csrftoken}" >
-                <div class="input-group mb-3">
-                    <input type="file" name="image" class="form-control" id="inputGroupFile02">
-                    <button type="submit" class="input-group-text" for="inputGroupFile02">Upload
-                    </button>
-                </div>             
-            </form>
-            </div>
-        </div>
-    `
-
+    handleLogoForm()
+    pageContent.innerHTML = ""
+    getLogoCard()
+    handleLogoForm()
 }
 
 function showAboutContent(){
@@ -41,6 +132,7 @@ function showAboutContent(){
     if ( document.getElementById("homeButton").className.match(/(?:^|\s)active(?!\S)/) ){
         document.getElementById("homeButton").classList.remove('active')
     }
+
     pageContent.innerHTML = `
         this is about content
     `

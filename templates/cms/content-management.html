@@ -1,14 +1,22 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
+
+
 {% block script %}
     <script type="text/javascript" src="{% static 'js/cms/cms.js' %}"></script>
 {% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cms.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container">
-    <h3>Manage Site Contents</h3>
-    <div class="row">
-        <div class="col-2" style="position: fixed;">
+    <div class="sticky-sidebar-page">            
+        <div class="sidebar">
+            <h3>Manage Site Contents</h3>   
             <div class="list-group">
                 <button class="list-group-item list-group-item-action active" aria-current="true" onClick="showHomeContent()" id="homeButton">Home</button>
                 <button class="list-group-item list-group-item-action" aria-current="true" onClick="showAboutContent()" id="aboutButton">About</button>
@@ -18,15 +26,22 @@
 
             </div>
         </div>
-        <div class="col-9" style="margin-left: 23rem;">
+        <div class="sandbox">
             <div class="page-content" id="page-content">
-                <h6>School Logo</h6>
-                <div class="card" style="width: 100%">
-                    <small class="card-body">In use:</small>
-                    <img src="{{logo.image.url}}" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;">
+
+
+                <!-- SCHOOL LOGO -->            
+
+
+                <div class="card" id="school-logo">
                     <div class="card-body">
+                        <h5>School Logo</h5>
+                        <small>On display:</small> <br>
+                        <div class="img" id="imgHolder">
+                            <img src="{{logo.image.url}}" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br> 
+                        </div>
                         <small>Change:</small>
-                    <form action="{% url 'change-logo' %}" method="POST"  enctype="multipart/form-data">
+                    <form action="{% url 'changelogo' %}" method="POST"  enctype="multipart/form-data" id="logo-form">
                         {% csrf_token %}
                         <div class="input-group mb-3">
                             <input type="file" name="image" class="form-control" required id="inputGroupFile02">
@@ -36,6 +51,33 @@
                     </form>
                     </div>
                 </div>
+
+
+                <!-- HOME CAROUSEL -->
+                
+                <div class="card">
+                    <div class="card-body"> 
+                        <h5>Home Carousel</h5>
+                        <small>On display:</small><br>
+                        {% for pic in carouselpics %}
+                            <img src="{{pic.image.url}}" class="card-img-top" alt="..." style="max-width: 15rem; max-height: 15rem;"> <br>  
+                            Label: {{pic.label}} <br>
+                            Content: {{pic.content}}<br>
+                            <span style="font-size: 20px;">
+                                <span style="color: red;">  
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                                <span style="color:brown"> 
+                                    <i class="far fa-edit"></i>
+                                </span>
+                            </span>
+                            <br>    
+                            <hr>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -44,7 +86,7 @@
 <script type="text/javascript">
     const csrftoken = "{{csrf_token}}"
     //home contents
-    var changeLogoUrlView = "{% url 'change-logo' %}"
+    var changeLogoUrlView = "{% url 'changelogo' %}"
     var schoolLogo = "{{logo.image.url|safe}}";
 </script>
 {% endblock %}
