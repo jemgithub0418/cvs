@@ -4,6 +4,14 @@
 
 {% block style %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/index.css/' %}">
+    <style>
+        body {
+          background-image: url({{background.image.url}});
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -11,31 +19,16 @@
         <img src="{% static 'img/cvs-background.jpg' %}">
     </div> -->
 
-    <!-- carousel start -->
-    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        {% for pic in carousel_pics %}
-        <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-          <img src="{{pic.image.url}}" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block" style="background: rgba(0, 0, 0, 0.35);">
-            <h5>{{pic.label}}</h5>
-            <p>{{pic.content}}</p>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
+    <!-- site header -->
+    <div class="site-header">
+        <img class="site-header-image " src="{{site_header_image.image.url}}">
+        <figcaption class="header-caption"><h1>{{site_header_image.caption}}</h1></figcaption>
     </div>
+
+
     <!-- carousel end -->
 <div class="container">
-        sample api post method. just to check if code is working
+        <!-- sample api post method. just to check if code is working
 
         <form id="blogform">
             title: <input type="text" name="title" id="title">
@@ -45,7 +38,7 @@
               Review Info
             </button>
         </form>
-            <!-- Modal -->
+    
         <div class="container" id="blogmodal">
             <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 600px; position:fixed; left:50%; transform: translate(-50%,0);" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -67,7 +60,81 @@
                 </div>
               </div>
             </div>
+        </div> -->
+
+        <div class="mid-section">
+            <div style="text-align: center; margin: 10px 0 10px;">
+                <h1>Christian Values School </h1><h1> Foundation, Inc. </h1>
+                <h3 style="color: grey;">Km. 18 Aguinaldo Highway, Habay 2, Bacoor City, Cavite</h3>
+            </div>
+            <div class="mid-section-body">
+                <div class="mission">
+                    <h1>Our Mission</h1>
+                    <p id="{{mission.id}}">
+                        {{mission.mission}}
+                    </p>
+                    <h1>Our Vision</h1>
+                    <p id="{{vision.id}}">
+                        {{vision.vision}}
+                    </p>
+                </div>
+            </div>
+
+            <div class="image">
+                    <!-- carousel start -->
+                    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        {% for pic in carousel_pics %}
+                        <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+                          <img src="{{pic.image.url}}" class="img" alt="...">
+                          <div class="carousel-caption" style="background: rgba(0, 0, 0, 0.35);">
+                            <p>
+                                <b>{{pic.label}}</b> <br>
+                                <small>{{pic.content}}</small>
+                            </p>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button style="margin-right: 2rem;" class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+              <!--   <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                  <div class="carousel-inner">
+                    {% for pic in carousel_pics %}
+                    <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+                      <img src="{{pic.image.url}}" class="d-block w-100" alt="...">
+                      <div class="carousel-caption d-none d-md-block" style="background: rgba(0, 0, 0, 0.35);">
+                        <h5>{{pic.label}}</h5>
+                        <p>{{pic.content}}</p>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div> -->
+                <img class="img" src="{{mnvimage.image.url}}">
+                Pre-Kinder/Kindergarten. Grades 1-6, Junior HS, & Senior HS
+            </div>
         </div>
+
+        <div class="featured" style="background-color: gray;">
+            <h2>Featured</h2>
+        </div>
+
 </div>
 
 <br>

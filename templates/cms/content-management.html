@@ -36,11 +36,9 @@
                 <div class="card" id="school-logo">
                     <div class="card-body">
                         <h5>School Logo</h5>
-                        <small>On display:</small> <br>
-                        <div class="img" id="imgHolder">
-                            <img src="{{logo.image.url}}" class="card-img-top" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br> 
-                        </div>
-                        <small>Change:</small>
+                        <small>On display:</small>
+                        <img src="{{logo.image.url}}" class="card-img-top" id="img" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br> 
+                        <label for="inputGroupFile02">Change:</label>
                     <form action="{% url 'changelogo' %}" method="POST"  enctype="multipart/form-data" id="logo-form">
                         {% csrf_token %}
                         <div class="input-group mb-3">
@@ -55,17 +53,17 @@
 
                 <!-- HOME CAROUSEL -->
                 
-                <div class="card">
+                <div class="card" id="carousel">
                     <div class="card-body"> 
                         <h5>Home Carousel</h5>
-                        <small>On display:</small><br>
+                        <small>On display:</small>
                         {% for pic in carouselpics %}
-                            <img src="{{pic.image.url}}" class="card-img-top" alt="..." style="max-width: 15rem; max-height: 15rem;"> <br>  
+                            <img id="img-{{pic.id}}" src="{{pic.image.url}}" class="card-img-top" alt="..." style="max-width: 15rem; max-height: 15rem;"> <br>  
                             Label: {{pic.label}} <br>
                             Content: {{pic.content}}<br>
                             <span style="font-size: 20px;">
                                 <span style="color: red;">  
-                                    <i class="fas fa-trash-alt"></i>
+                                   <i class="fas fa-trash-alt"></i>
                                 </span>
                                 <span style="color:brown"> 
                                     <i class="far fa-edit"></i>
@@ -78,15 +76,22 @@
                     </div>
                 </div>
 
+
+                <!-- Mission -->
+
+                <div class="carousel">
+                
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
-    const csrftoken = "{{csrf_token}}"
+
     //home contents
     var changeLogoUrlView = "{% url 'changelogo' %}"
-    var schoolLogo = "{{logo.image.url|safe}}";
+    var schoolLogo = "{{logo.image.url|safe}}"
 </script>
 {% endblock %}

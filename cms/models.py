@@ -45,3 +45,54 @@ class HomeCarousel(models.Model):
 
     def __str__(self):
         return self.label
+
+
+class Mission(models.Model):
+    mission = models.TextField(max_length= 1000)
+
+    class Meta:
+        verbose_name_plural = 'Mission'
+
+    def __str__(self):
+        return "Mission"
+
+
+class Vision(models.Model):
+    vision = models.TextField(max_length = 1000)
+
+    class Meta:
+        verbose_name_plural = 'Vision'
+
+    def __str__(self):
+        return "Vision"
+
+
+class ImageBesideMissionVision(models.Model):
+    image = models.ImageField(upload_to='Mission and Vision pic', max_length=255)
+
+    class Meta:
+        verbose_name_plural = 'Image Beside Mission Vision'
+
+    def __str__(self):
+        return "Change Mission and Vision Image"
+
+
+class SiteBackground(models.Model):
+    image = models.ImageField(upload_to='Site Background', max_length= 255)
+
+    class Meta: 
+        verbose_name_plural = 'Site Background'
+
+    def __str__(self):
+        return "Change Site Background"
+
+
+class SiteHeaderImage(models.Model):
+    image = models.ImageField(upload_to='Site Header Image', max_length= 255)
+    caption = models.CharField(max_length= 255, blank= True, null= True)
+
+    class Meta:
+        verbose_name_plural = 'Site Header Image'
+
+    def __str__(self):
+        return "Change Site Header Image"
