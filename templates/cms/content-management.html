@@ -36,7 +36,7 @@
                 <div class="card" id="school-logo">
                     <div class="card-body">
                         <h5>School Logo</h5>
-                        <small>On display:</small>
+                        <small>On display: </small>
                         <img src="{{logo.image.url}}" class="card-img-top" id="img" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br> 
                         <label for="inputGroupFile02">Change:</label>
                     <form action="{% url 'changelogo' %}" method="POST"  enctype="multipart/form-data" id="logo-form">
@@ -56,8 +56,9 @@
                 <div class="card" id="carousel">
                     <div class="card-body"> 
                         <h5>Home Carousel</h5>
-                        <small>On display:</small>
+
                         {% for pic in carouselpics %}
+                            <small>On display: </small>
                             <img id="img-{{pic.id}}" src="{{pic.image.url}}" class="card-img-top" alt="..." style="max-width: 15rem; max-height: 15rem;"> <br>  
                             Label: {{pic.label}} <br>
                             Content: {{pic.content}}<br>
@@ -79,8 +80,40 @@
 
                 <!-- Mission -->
 
-                <div class="carousel">
-                
+                <div class="card" id="mission">
+                    <div class="card-body">
+                        <h5>Mission</h5>
+                        <small>On display: </small>
+                        <p id="mission-content">
+                            {{mission.mission}}
+                        </p>
+                        <span style="font-size: 20px;">
+                            <span style="color:brown">
+                                <i onClick="popMissionModal()" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+                            </span>
+                        </span>
+                        <br>
+
+                    </div>
+                </div>
+
+
+                <!-- Vision -->
+                <div class="card" id="vision">
+                    <div class="card-body">
+                        <h5>Vision</h5>
+                        <small>On display: </small>
+                        <p id="vision-content">
+                            {{vision.vision}}
+                        </p>
+                        <span style="font-size: 20px;">
+                            <span style="color:brown">
+                                <i onClick="popVisionModal()" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+                            </span>
+                        </span>
+                        <br>
+
+                    </div>
                 </div>
 
             </div>
@@ -88,10 +121,34 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="container" id="web-content-modal">
+    <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 600px; position:fixed; left:50%; transform: translate(-50%,0);" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-title"></h5>
+          </div>
+          <div class="modal-body" id="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="saveButton">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
 <script type="text/javascript">
 
     //home contents
     var changeLogoUrlView = "{% url 'changelogo' %}"
     var schoolLogo = "{{logo.image.url|safe}}"
+    var missionId = "{{mission.id}}"
+    var visionId = "{{vision.id}}"
 </script>
 {% endblock %}

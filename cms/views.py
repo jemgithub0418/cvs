@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from forms.cms import ChangeLogoForm, HomeCarouselForm
+from django.shortcuts import get_object_or_404
 from .models import (
         SchoolLogo, HomeCarousel,
         Mission, Vision,
@@ -39,6 +40,7 @@ class HomeCarouselList(generics.ListCreateAPIView):
     serializer_class = HomeCarouselSerializer
     queryset = HomeCarousel.objects.all()
 
+
 class UpdateVision(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated, IsAdminUser]
@@ -46,11 +48,12 @@ class UpdateVision(generics.RetrieveUpdateDestroyAPIView):
     queryset = Vision.objects.all()
 
 
-class UpdateMission(generics.RetrieveUpdateDestroyAPIView):
+class UpdateMission(generics.RetrieveUpdateAPIView):
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated, IsAdminUser]
     serializer_class = MissionSerializer
     queryset = Mission.objects.all()
+    lookup_field = 'pk'
 
 
 class ChangeLogo(generics.ListCreateAPIView):
@@ -59,6 +62,7 @@ class ChangeLogo(generics.ListCreateAPIView):
     serializer_class = SchoolLogoSerializer
     queryset = SchoolLogo.objects.all()
 
+
 def contentmanagement(request):
     # forms
     logoform = ChangeLogoForm()
@@ -66,10 +70,14 @@ def contentmanagement(request):
 
     # data
     carouselpics = HomeCarousel.objects.all()
+    mission = Mission.objects.first()
+    vision = Vision.objects.first()
 
     context = {
         'logoform': logoform,
         'homecarouselform': homecarouselform, 
         'carouselpics': carouselpics,
+        'mission': mission,
+        'vision' : vision,
     }
     return render(request, 'cms/content-management.html', context)

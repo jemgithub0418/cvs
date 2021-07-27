@@ -1,5 +1,6 @@
 from django.urls import path, include
 from cms import views as cms
+
 urlpatterns = [
     path('', cms.contentmanagement, name ='cms' ),
 
