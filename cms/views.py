@@ -6,6 +6,7 @@ from .models import (
         Mission, Vision,
         SiteHeaderImage,
     )
+from django.http import JsonResponse
 
 #rest framework imports
 from rest_framework.response import Response
@@ -39,6 +40,21 @@ class HomeCarouselList(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
     serializer_class = HomeCarouselSerializer
     queryset = HomeCarousel.objects.all()
+
+
+class HomeCarouselDetail(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = HomeCarouselSerializer
+    queryset = HomeCarousel.objects.all()
+
+    # def patch(self, request, pk):
+    #     carousel = self.get_queryset(pk)
+    #     serializer = HomeCarouselSerializer(carousel, data= request.data, partial= True)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return JsonResponse(code=201, data= serializer.data)
+    #     return JsonResponse(code= 400, data="Wrong input.")
 
 
 class UpdateVision(generics.RetrieveUpdateDestroyAPIView):

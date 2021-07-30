@@ -59,15 +59,17 @@
 
                         {% for pic in carouselpics %}
                             <small>On display: </small>
-                            <img id="img-{{pic.id}}" src="{{pic.image.url}}" class="card-img-top" alt="..." style="max-width: 15rem; max-height: 15rem;"> <br>  
-                            Label: {{pic.label}} <br>
-                            Content: {{pic.content}}<br>
+                            <img id="img-{{pic.id}}" src="{{pic.image.url}}" class="card-img-top" alt="..." style="max-width: 15rem; max-height: 15rem;"> <br> 
+                            <span>Label:</span>
+                            <span id="label-{{pic.id}}">{{pic.label}} </span><br>
+                            <span>Content:</span>
+                            <span id="content-{{pic.id}}">{{pic.content}}</span><br>
                             <span style="font-size: 20px;">
                                 <span style="color: red;">  
-                                   <i class="fas fa-trash-alt"></i>
+                                   <i data-id="{{pic.id}}" data-process="delete"  class="fas fa-trash-alt"  onClick="popCarouselDetailModal(this.getAttribute('data-id'))" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
                                 </span>
                                 <span style="color:brown"> 
-                                    <i class="far fa-edit"></i>
+                                    <i data-id="{{pic.id}}" data-process="update" onClick="popCarouselDetailModal(this.getAttribute('data-id'))" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" class="far fa-edit"></i>
                                 </span>
                             </span>
                             <br>    
@@ -124,7 +126,7 @@
 
 <!-- Modal -->
 <div class="container" id="web-content-modal">
-    <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 600px; position:fixed; left:50%; transform: translate(-50%,0);" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 400px; position:fixed; left:50%; transform: translate(-50%,0);" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
           <div class="modal-header">

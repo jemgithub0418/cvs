@@ -136,27 +136,36 @@ function getCarouselCard(){
         cardBody.classList.add('card-body')
         var header = document.createElement('h5')
         header.innerText = 'Home Carousel'
-        var onDisplay = document.createElement('small')
+        var onDisplay = document.createElement('span')
         onDisplay.innerText = 'On display: '
         var cardImage = document.createElement('img')
         cardImage.classList.add('card-img-top')
         cardImage.alt = '...'
+        // cardImage.id = ""
         cardImage.style.maxWidth = '15rem'
         cardImage.style.maxHeight = '15rem'
-        var cardLabel = document.createElement('small')
+        var cardLabel = document.createElement('span')
         cardLabel.innerText = ""
-        var cardContent = document.createElement('small')
+        // cardLabel.id = ""
+        var cardContent = document.createElement('span')
         cardContent.innerText = ""
+        // cardContent.id = ""
         var iconGroup = document.createElement('span')
         iconGroup.style.fontSize = '20px'
         var trashIconSpan = document.createElement('span')
         trashIconSpan.style.color = 'red'
         var trashIcon = document.createElement('i')
         trashIcon.classList.add('fas', 'fa-trash-alt')
+        trashIcon.setAttribute('data-process', "delete")
         var editIconSpan = document.createElement('span')
         editIconSpan.style.color = 'brown'
         var editIcon = document.createElement('i')
         editIcon.classList.add('far', 'fa-edit')
+        editIcon.setAttribute('type', 'button')
+        editIcon.setAttribute('data-bs-toggle', 'modal')
+        editIcon.setAttribute('data-bs-target', '#exampleModal')
+        editIcon.classList.add('far', 'fa-edit')
+        editIcon.setAttribute('data-process', "update")
         var spacing = document.createElement('small')
         spacing.innerHTML = `&nbsp`
 
@@ -165,6 +174,10 @@ function getCarouselCard(){
         card.append(cardBody)
         cardBody.append(header)
         for (var i = 0; i < data.length; i++) {
+            var itemId = data[i].id
+            cardImage.setAttribute('id', "img-".concat(itemId))
+            cardLabel.setAttribute('id', "label-".concat(itemId))
+            cardContent.setAttribute('id', "content-".concat(itemId))
             cardBody.append(onDisplay)
             cardImage.src = data[i].image
             cardBody.append(cardImage)
@@ -181,12 +194,11 @@ function getCarouselCard(){
             iconGroup.append(spacing)
             iconGroup.append(editIconSpan)
             editIconSpan.append(editIcon)
+            editIcon.setAttribute('onClick', `popCarouselDetailModal(${itemId})`)
             cardBody.innerHTML += `<br><hr>`
         }
 
-
-
-       return card
+        return card
     })
 }
 
@@ -281,13 +293,87 @@ function getVisionCard(){
 
 // popping modals
 
+function popCarouselDetailModal(id){
+    var updateCarouselImageModal = document.getElementById('exampleModal')
+
+    updateCarouselImageModal.addEventListener('shown.bs.modal', function(){
+
+        var saveButton = document.getElementById('saveButton')
+        saveButton.setAttribute('for', 'carousel-details')
+        saveButton.setAttribute('onClick', `saveUpdateCarouselModal()`)
+        var title = document.getElementById('modal-title')
+        var body = document.getElementById('modal-body')
+        var onDisplay = document.createElement('small')
+        onDisplay.innerText = `On display: `
+        var form = document.createElement('form')
+        form.action = `web-content/api/home-carousel/detail/${id}/`
+        form.id = "carousel-detail-form"
+        form.method = "PUT"
+        var labelForInputLabel = document.createElement('span')
+        labelForInputLabel.innerText = "Label:"
+
+        var inputLabel = document.createElement('input')
+        var labelId = "label-".concat(id)
+        inputLabel.type = "text"
+        inputLabel.classList.add("form-control")
+        inputLabel.required = true
+        inputLabel.id = `label-input-${id}`
+        inputLabel.value = document.getElementById(labelId).innerText
+        var labelForInputContent = document.createElement('span')
+        labelForInputContent.innerText = "Content: "
+        var inputContent = document.createElement('textarea')
+        var contentId = "content-".concat(id)
+        inputContent.id = `content-input-${id}`
+        inputContent.classList.add("textinput", "textInput", "form-control")
+        inputContent.rows = "5"
+        inputContent.required = true
+        inputContent.ariaLabel = "With textarea"
+        var contentValue = document.getElementById(contentId).innerText
+        inputContent.innerText = contentValue
+        var image = document.createElement('img')
+        var imageId = "img-".concat(id)
+        var imageValue = document.getElementById(imageId)
+        image.src = imageValue.src
+        image.style.maxHeight = "15rem"
+        image.style.maxWidth = "15rem"
+        // var labelForInputImage = document.createElement('span')
+        // labelForInputImage.innerText = "Image file: "
+        // var inputImage = document.createElement('input')
+        // inputImage.type = "file"
+        // inputImage.classList.add('form-control')
+        // inputImage.required = true
+        // inputImage.id = `image-input-${id}`
+        // inputImage. = document.getElementById(`img-${id}`).src
+        //         <span>Change:</span>
+        // <input type="file" name="image" class="form-control" required id="inputGroupFile02"> 
+
+        title.innerHTML= ""
+        body.innerHTML = ""
+
+        title.innerText = "Update carousel details"
+        body.append(form)
+        form.append(onDisplay)
+        form.append(image)
+        form.innerHTML += "<br>"
+        // form.append(labelForInputImage)
+        // form.append(inputImage)
+        form.append(labelForInputLabel)
+        form.append(inputLabel)
+        form.append(labelForInputContent)
+        form.append(inputContent)
+
+        handleCarouselForm(id)
+
+    })
+}
+
 function popMissionModal(){
     var updateMissionModal = document.getElementById('exampleModal')
     var missionContent = document.getElementById('mission-content')
 
     updateMissionModal.addEventListener('shown.bs.modal', function(){
         var saveButton = document.getElementById('saveButton')
-        saveButton.setAttribute('for', 'mission-content')
+        saveButton.setAttribute('for', 'mission-form')
         saveButton.setAttribute('onclick', `saveMissionModal()`)
         var title = document.getElementById('modal-title')
         var body = document.getElementById('modal-body')
@@ -365,6 +451,43 @@ function popVisionModal(){
 
 
 // formsssssss
+
+
+// update carousel items
+function handleCarouselForm(id){
+    var carouselform = document.getElementById('carousel-detail-form')
+    carouselform.addEventListener('submit', function(e){
+        e.preventDefault()
+
+        var label = document.getElementById(`label-input-${id}`).value
+        var content = document.getElementById(`content-input-${id}`).value
+        var url = `/web-content/api/home-carousel/detail/${id}/`
+
+        fetch(url, {
+            method: "patch",
+            headers : {
+                "Content-type" : 'application/json',
+                "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify({
+                'label': label,
+                'content': content,
+            }),
+        })
+        .then((response)=> response.json())
+        .then(function(data){
+            var label = document.getElementById(`label-${data.id}`)
+            var content = document.getElementById(`content-${data.id}`)
+
+            label.innerText = data.label
+            content.innerText = data.content
+
+        })
+    })
+
+}
+
+
 // change logo
 function handleLogoForm(){
     var logoform = document.getElementById('logo-form')
@@ -467,6 +590,11 @@ function saveVisionModal(){
     form.dispatchEvent(new Event('submit'));
 }
 
+
+function saveUpdateCarouselModal(){
+    var form = document.getElementById("carousel-detail-form")
+    form.dispatchEvent(new Event('submit'))
+}
 
 
 
