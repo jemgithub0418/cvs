@@ -26,7 +26,7 @@ SECRET_KEY = 'sip*i7u$^(@-rbdxt=j=%*7aeol^7nkpend7o45bgtrf^vx7ti'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['jeremiramos.pythonanywhere.com']
 
 
 # Application definition
@@ -140,6 +140,7 @@ USE_TZ = True
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/jeremiramos/cvs/static'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -169,4 +170,5 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "http://jeremiramos.pythonanywhere.com/",
 ]
