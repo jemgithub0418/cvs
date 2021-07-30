@@ -73,10 +73,25 @@ def register(request):
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
-        'Profile List/Create': 'accounts/api/user/profile/create/', #this is for creating users. I need to create user object and profile object at the same time
-        'User credentials Detail': 'accounts/api/user/detail/<int:id>/', #list lang to ng user objects (withour profile objects) pwede ka magupdate ng username dito at email
-        'Profile Update' : 'accounts/api/user/profile/detail/<int:pk>/', #for updating profile object and user object pero email lang ung mauupdate dito
         'User List' : 'accounts/api/user/list/', #user list lang
+        'User credentials Detail': 'accounts/api/user/detail/<int:id>/', #list lang to ng user objects (withour profile objects) pwede ka magupdate ng username dito at email
+
+        'Profile List/Create': 'accounts/api/user/profile/create/', #this is for creating users. I need to create user object and profile object at the same time
+        'Profile Update' : 'accounts/api/user/profile/detail/<int:pk>/', #for updating profile object and user object pero email lang ung mauupdate dito
+<<<<<<< HEAD
+        'User List' : 'accounts/api/user/list/', #user list lang
+        'Home Carousel Detail' : 'api/home-carousel/detail/<int:pk>/',
+=======
+
+        'Change Logo' : 'web-content/api/changelogo/',
+        'Home Carousel Pictures' : 'web-content/api/home-carousel/',
+        'Update Mission (mission id= 1)' : 'web-content/api/update-mission/<int:pk>/',
+        'Update Vision (vision id = 1)' : 'web-content/api/update-vision/<int:pk>/',
+        'Update Site Header Image (image id = 1)' : 'web-content/api/site-header-image/<int:pk>/',
+
+
+
+>>>>>>> 386b45b3aed1208ca8b24f1c449586962ff7078b
     }
     return Response(api_urls)
 

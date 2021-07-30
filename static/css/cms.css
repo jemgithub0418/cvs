@@ -1,0 +1,31 @@
+.sticky-sidebar-page {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.sticky-sidebar-page::after {
+    display: table;
+    content: "";
+    clear: both;
+}
+
+.sticky-sidebar-page .sandbox {
+    width: 60%;
+    margin: 0 0 40px;
+    float: right;
+}
+
+.sticky-sidebar-page .sidebar {
+    padding: 10px 10px 30px;
+    box-sizing: border-box;
+    float: left;
+    border-radius: 2px;
+    position: fixed;
+    left: 15%;
+    width: 28%;
+}
+
+.card {
+    margin:1rem 0 1rem;
+
+}

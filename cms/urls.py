@@ -9,6 +9,7 @@ urlpatterns = [
 
     #home carousel
     path('api/home-carousel/', cms.HomeCarouselList.as_view(), name='carosel-list'),
+    path('api/home-carousel/detail/<int:pk>/', cms.HomeCarouselDetail.as_view(), name = 'caousel-detail'),
 
     #mission vision api
     path('api/update-mission/<int:pk>/', cms.UpdateMission.as_view(), name='update-mission'),
