@@ -1,4 +1,4 @@
-.site-header {
+/*.site-header {
     width: 100%;
     height: 30%;
 }
@@ -8,7 +8,7 @@
     max-height: 100%;
     object-fit: contain;
 }
-
+*/
 .site-header .header-caption {
     position: absolute;
     z-index: 999;
@@ -22,20 +22,19 @@
     text-shadow: black 0.1em 0.1em 0.2em
 }
 
-.mid-section .mid-section-body {
+/*.mid-section .mid-section-body {
     margin-top: 10px 10px 10px;
-}
+}*/
 
 
 /*carousel*/
 
-.carousel{
-    max-height: 250px;
+/*.carousel{
+    max-height: 100%;
     max-width: 100%;
-    /*position: absolute;*/
-}
+}*/
 
-.carousel .carousel-inner {
+/*.carousel .carousel-inner {
 
 }
 
@@ -47,7 +46,7 @@
 }
 
 .carousel .carousel-inner .carousel-item .img {
-    max-height: 250px;
+    max-height: 100%;
     max-width: 100%;
     position: relative;
 }
@@ -94,4 +93,4 @@
 
     margin-top: 2rem;
     padding-right: 2rem;
-}
+}*/

@@ -4,9 +4,13 @@
 {% block content %}
     <div class="container" style="padding-bottom: 2rem; padding-top: 2rem;">
         <h3>Rules concerning fees:</h3>
+        <hr style="height: 5px; background-color: red;">
         {{tuition_fee_objects.rules|safe}}
-
+        <br>
         <h3>Tuition Fees for S.Y. {{tuition_fee_objects.school_year}}</h3>
+        <hr style="height: 5px; background-color: red;">
+        <div class="container" style="max-width: 100%; overflow-x: scroll;">
             {{tuition_fee_objects.tuition_content|safe}}
+        </div>
     </div>
 {% endblock content %}
