@@ -1,13 +1,12 @@
 from django.urls import path
 from accounts.views import (
-    register, apiOverview, UserProfileCreate, UserProfileDetail, UserList, UserUpdate, BlogCreate
+    register, UserProfileCreate, UserProfileDetail, UserList, UserUpdate, BlogCreate
     )
 
 app_name = 'accounts'
 
 urlpatterns = [
     path('register/', register, name='register'),
-    path('api/', apiOverview, name='apioverview'),
 
     #staff profile api
     path('api/user/profile/create/', UserProfileCreate.as_view(), name='userprofile-create'),
