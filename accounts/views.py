@@ -78,10 +78,10 @@ def apiOverview(request):
 
         'Profile List/Create': 'accounts/api/user/profile/create/', #this is for creating users. I need to create user object and profile object at the same time
         'Profile Update' : 'accounts/api/user/profile/detail/<int:pk>/', #for updating profile object and user object pero email lang ung mauupdate dito
-<<<<<<< HEAD
+
         'User List' : 'accounts/api/user/list/', #user list lang
         'Home Carousel Detail' : 'api/home-carousel/detail/<int:pk>/',
-=======
+
 
         'Change Logo' : 'web-content/api/changelogo/',
         'Home Carousel Pictures' : 'web-content/api/home-carousel/',
@@ -91,7 +91,6 @@ def apiOverview(request):
 
 
 
->>>>>>> 386b45b3aed1208ca8b24f1c449586962ff7078b
     }
     return Response(api_urls)
 

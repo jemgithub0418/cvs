@@ -33,20 +33,8 @@
         <div class="sandbox">
             <div class="page-content" id="page-content">
 
-
-<<<<<<< HEAD
                 <!-- SCHOOL LOGO -->           
 
-=======
-                <!-- SCHOOL LOGO -->
->>>>>>> 054659d528c28d622341216928ccb802440c5dfd
-
-<!--             <form method="POST" id="mission-form" action=`/web-content/api/update-mission/{{mission.id}}/`>
-                {% csrf_token %}
-                {{missionform.media}}
-                {{missionform.as_p}}
-            </form> 
- -->
 
                 <div class="card" id="school-logo">
                     <div class="card-body">
@@ -70,7 +58,6 @@
                 <!-- HOME CAROUSEL -->
 
                 <div class="card" id="carousel">
-<<<<<<< HEAD
                     <div class="card-body"> 
                         <div class="row" style="display: flex;">
                             <div class="col-8">
@@ -83,14 +70,8 @@
                             </div>
                         </div>
                         <hr>
-=======
-                    <div class="card-body">
-                        <h5>Home Carousel</h5>
->>>>>>> 054659d528c28d622341216928ccb802440c5dfd
-
                         {% for pic in carouselpics %}
                             <small>On display: </small>
-<<<<<<< HEAD
                             <img id="img-{{pic.id}}" src="{{pic.image.url}}" class="card-img-top" alt="..." style="max-width: 15rem; max-height: 15rem;"> <br> 
                             <span>Label:</span>
                             <span id="label-{{pic.id}}">{{pic.label}} </span><br>
@@ -102,17 +83,6 @@
                                 </span>
                                 <span style="color:brown"> 
                                     <i data-id="{{pic.id}}" data-process="update" onClick="popCarouselDetailModal(this.getAttribute('data-id'))" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" class="far fa-edit"></i>
-=======
-                            <img id="img-{{pic.id}}" src="{{pic.image.url}}" class="card-img-top" alt="..." style="max-width: 15rem; max-height: 15rem;"> <br>
-                            Label: {{pic.label}} <br>
-                            Content: {{pic.content}}<br>
-                            <span style="font-size: 20px;">
-                                <span style="color: red;">
-                                   <i class="fas fa-trash-alt"></i>
-                                </span>
-                                <span style="color:brown">
-                                    <i class="far fa-edit"></i>
->>>>>>> 386b45b3aed1208ca8b24f1c449586962ff7078b
                                 </span>
                             </span>
                             <br>

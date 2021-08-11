@@ -43,7 +43,7 @@ function updateLogo(){
 
 
 function getLogoCard(){
-    var url = "http://localhost:8000/web-content/api/changelogo/"
+    var url = "/web-content/api/changelogo/"
 
 
     return fetch(url)
