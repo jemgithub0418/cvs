@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{% static './css/navbar.css/' %}">
     <!-- font awesome -->
     <script src="https://kit.fontawesome.com/13af69944d.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/29.1.0/classic/ckeditor.js"></script> -->
     {% block style %}
     {% endblock %}
     <title>{% block title %}CVS{% endblock %}</title>
@@ -38,6 +39,9 @@
 
     {% endblock %}
 
+    {% block footer %}
+        {% include 'footer.html' %}
+    {% endblock footer %}
 
 
     <!-- Optional JavaScript; choose one of the two! -->

@@ -1,7 +1,7 @@
  {% load static %}
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light ">
       <div class="container">
         <a class="navbar-brand" href="{% url 'index' %}" id="logo-div"><img src="{{logo.image.url}}" alt="no image provided" style="max-width: 7rem; max-height: 7rem;"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,15 +12,45 @@
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="{% url 'index' %}">Home</a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="{% url 'accounts:register' %}">Sign Up</a>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="{% url 'index' %}#contactUs" id="contactUsButton">Contact Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'cms' %}">Manage Web Content</a>
+              <a class="nav-link" aria-current="page" href="{% url 'index' %}#news-and-events" id="eventsButton">News and Announcements</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'admin:index' %}" tabindex="-1">Admin Page</a>
-            </li>
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                    Admission
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                    <li class="nav-item ">
+                      <a class="nav-link" href="{% url 'admission' %}">Requirements</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'tuition' %}">Tuition Fees</a>
+                    </li>
+                </ul>
+            </div>
+            {% if user.is_authenticated and user.is_superuser %}
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li class="nav-item ">
+                          <a class="nav-link" href="{% url 'accounts:register' %}">Add new staff</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'cms' %}">Manage Web Content</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'admin:index' %}" tabindex="-1">Admin Page</a>
+                        </li>
+                    </ul>
+                </div>
+
+            {% endif %}
+
           </ul>
         </div>
       </div>

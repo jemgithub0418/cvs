@@ -1,10 +1,18 @@
 from django.shortcuts import render, redirect
-from forms.cms import ChangeLogoForm, HomeCarouselForm
 from django.shortcuts import get_object_or_404
+
+# form imports
+from forms.cms import (
+        ChangeLogoForm, HomeCarouselForm, MissionForm, VisionForm,
+        SchoolOfficeHoursForm, SchoolAddressForm,
+    )
+
 from .models import (
         SchoolLogo, HomeCarousel,
         Mission, Vision,
-        SiteHeaderImage,
+        SiteHeaderImage, SchoolOfficeHours, SchoolAddress,
+        SchoolContactNumbers,
+
     )
 from django.http import JsonResponse
 
@@ -20,8 +28,10 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from serializers.cms import (
         SchoolLogoSerializer, MissionSerializer,
         VisionSerializer, HomeCarouselSerializer,
-        SiteHeaderImageSerializer,
+        SiteHeaderImageSerializer,SchoolOfficeHoursSerializer,
+        SchoolAddressSerializer, SchoolContactNumberSerializer,
     )
+
 
 # Create your views here.
 
@@ -79,21 +89,75 @@ class ChangeLogo(generics.ListCreateAPIView):
     queryset = SchoolLogo.objects.all()
 
 
-def contentmanagement(request):
-    # forms
-    logoform = ChangeLogoForm()
-    homecarouselform = HomeCarouselForm()
+class UpdateSchoolOfficeHours(generics.RetrieveUpdateAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = SchoolOfficeHoursSerializer
+    queryset = SchoolOfficeHours.objects.all()
+    lookup_field = 'pk'
 
+
+class UpdateSchoolAddress(generics.RetrieveUpdateAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = SchoolAddressSerializer
+    queryset = SchoolAddress.objects.all()
+    lookup_field = 'pk'
+
+
+class UpdateSchoolContactNumber(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = SchoolContactNumberSerializer
+    queryset = SchoolContactNumbers.objects.all()
+    lookup_field = 'pk'
+
+
+class SchoolContactNumberList(generics.ListCreateAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAdminUser, IsAuthenticated]
+    serializer_class = SchoolContactNumberSerializer
+    queryset = SchoolContactNumbers.objects.all()
+
+
+def contentmanagement(request):
     # data
     carouselpics = HomeCarousel.objects.all()
     mission = Mission.objects.first()
     vision = Vision.objects.first()
+    office_hours = SchoolOfficeHours.objects.first()
+    school_address = SchoolAddress.objects.first()
+    school_contact_numbers = SchoolContactNumbers.objects.all()
 
+    # forms
+    logoform = ChangeLogoForm()
+    homecarouselform = HomeCarouselForm()
+    missionform = MissionForm({'mission': mission.mission})
+    visionform = VisionForm({'vision': vision.vision})
+    office_hours_form = SchoolOfficeHoursForm({
+            'starting_day': office_hours.starting_day,
+            'last_day' : office_hours.last_day,
+            'opening' : office_hours.opening,
+            'closing' : office_hours.closing,
+        })
+    school_address_form = SchoolAddressForm({
+            'street' : school_address.street,
+            'town' : school_address.town,
+            'city' : school_address.city,
+            'province' : school_address.province,
+        })
     context = {
         'logoform': logoform,
         'homecarouselform': homecarouselform, 
         'carouselpics': carouselpics,
         'mission': mission,
         'vision' : vision,
+        'missionform': missionform,
+        'visionform': visionform,
+        'office_hours': office_hours,
+        'office_hours_form' : office_hours_form,
+        'school_address' : school_address,
+        'school_address_form' : school_address_form,
+        'school_contact_numbers' : school_contact_numbers,
     }
     return render(request, 'cms/content-management.html', context)

@@ -11,6 +11,10 @@
           background-attachment: fixed;
           background-size: 100% 100%;
         }
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
     </style>
 {% endblock %}
 
@@ -62,20 +66,22 @@
             </div>
         </div> -->
 
-        <div class="mid-section">
+        <div class="mid-section" id="mid-section">
             <div style="text-align: center; margin: 10px 0 10px;">
                 <h1>Christian Values School </h1><h1> Foundation, Inc. </h1>
-                <h3 style="color: grey;">Km. 18 Aguinaldo Highway, Habay 2, Bacoor City, Cavite</h3>
+                {% for address in school_address %}
+                <h3 style="color: grey;">{{address.street}}, {{address.town}}, {{address.city}}, {{address.province}}</h3>
+                {% endfor %}
             </div>
             <div class="mid-section-body">
                 <div class="mission">
                     <h1>Our Mission</h1>
                     <p id="{{mission.id}}">
-                        {{mission.mission}}
+                        {{mission.mission|safe}}
                     </p>
                     <h1>Our Vision</h1>
                     <p id="{{vision.id}}">
-                        {{vision.vision}}
+                        {{vision.vision|safe}}
                     </p>
                 </div>
             </div>
@@ -85,8 +91,8 @@
                     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                       <div class="carousel-inner">
                         {% for pic in carousel_pics %}
-                        <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-                          <img src="{{pic.image.url}}" class="img" alt="...">
+                        <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}" style="max-height: 300px;">
+                          <img src="{{pic.image.url}}"  class="img" alt="...">
                           <div class="carousel-caption" style="background: rgba(0, 0, 0, 0.35);">
                             <p>
                                 <b>{{pic.label}}</b> <br>
@@ -104,7 +110,7 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                       </button>
-                    </div>
+                    </div> <br>
               <!--   <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                   <div class="carousel-inner">
                     {% for pic in carousel_pics %}
@@ -127,75 +133,108 @@
                   </button>
                 </div> -->
                 <img class="img" src="{{mnvimage.image.url}}">
+                <div id="news-and-events" ></div>
                 Pre-Kinder/Kindergarten. Grades 1-6, Junior HS, & Senior HS
             </div>
         </div>
 
-        <div class="featured" style="background-color: gray;">
-            <h2>Featured</h2>
+
+        <div class="news-section" style="margin-bottom: 2rem;">
+            <div class="row" style="max-height:  350px;">
+
+                <!-- upcoming events -->
+                <div class="col-4">
+                    <div class="card" style="max-height: 100%;">
+                        <div class="card-header" style="background-color: #a1d6ea;">                                
+                            <h5>Upcoming Events</h5>
+                            <!-- <strong><hr style="height:0.3rem; background:black;"></strong> -->
+                        </div>
+                        <div class="card-body">
+                            <div style="height: 250px; overflow-y:scroll;max-height:300px;">
+                                {% for event in events %}
+                                    {% if forloop.counter|divisibleby:2 %}
+                                        <div class="event">
+                                    {% else %}
+                                        <div class="event" style="background-color: #e9ecef;">
+                                    {% endif %}
+                                        <div class="card-title">
+                                            <span><strong>{{event.event}}</strong></span><br>
+                                            {% if event.date_of_event is not None %}
+                                            <span>On</span> <span>{{event.date_of_event}}, {{event.time_of_event}}</span>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        {% if event.description %}
+                                            <span>{{event.description|safe}}</span>
+                                        {% endif %}
+                                        <small class="text-muted">Date Posted: {{event.date_posted}}</small>
+                                    </div>
+                                    {% if not forloop.last %}<hr>{% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- announcements -->
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header" style="background-color: #a1d6ea;">
+                            <h5>Announcements</h5>
+                        </div>
+                        <div class="card-body">
+                            <div style="height: 250px; overflow-y:scroll;max-height:300px;">
+                                {% for item in announcements %}
+                                    {% if forloop.counter|divisibleby:2 %}
+                                        <div class="event">
+                                    {% else %}
+                                        <div class="event" style="background-color: #e9ecef;">
+                                    {% endif %}
+                                        <div class="card-title">
+                                            <span><strong>{{item.announcement}}</strong></span><br>
+                                        </div>
+                                        {% if item.description %}
+                                            <span>{{item.description|safe}}</span>
+                                        {% endif %}
+                                        <small class="text-muted">Date Posted: {{item.date_posted}}</small>
+                                    </div>
+                                    {% if not forloop.last %}<hr>{% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- verse of the day -->
+                <div class="col-4">
+                    <div class="card" style="max-height: 100%;">
+                        <div class="card-header" style="background-color: #a1d6ea;">
+                            <h5>Verse of the Day</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="verse" style="height: 250px; overflow-y: scroll;">
+                                {% for item in verse %}
+                                    <div class="card-title">
+                        From the book of <strong>{{item.book}}</strong><br>
+                        Chapter {{item.chapter}}:{{item.starting_verse}}{% if item.last_verse is not None %}-{{item.last_verse}}{% endif %}
+                                    </div>
+
+                                    <div class="content"><br>
+                                        {{item.content|safe}}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
 </div>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-<div class="sample">
-    sample
-</div>
-
-
 <script type="text/javascript" src="{% static 'js/accounts/home.js' %}" ></script>
+<script type="text/javascript" src = "{% static 'js/index/smoothscroll.js' %}"></script>
 {% endblock %}

@@ -44,7 +44,7 @@ class StaffProfileAdmin(admin.ModelAdmin):
     def has_add_permission(self, request, obj=None):
         return False
 
-admin.site.register(Blog)
+# admin.site.register(Blog)
 admin.site.register(User, UserAdmin)
 admin.site.register(StaffProfile, StaffProfileAdmin)
 admin.site.unregister(Group)

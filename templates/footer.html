@@ -1,0 +1,177 @@
+<!-- Footer -->
+<footer class="bg-light text-center ">
+  <!-- Grid container -->
+  <div class="container p-4">
+
+    <!-- Section: Text -->
+    <section class="mb-4 footer" id="contactUs" >
+      <p>
+            <a class="navbar-brand" href="{% url 'index' %}" id="logo-div"><img src="{{logo.image.url}}" alt="no image provided" style="max-width: 7rem; max-height: 7rem;"></a>
+            <div style="text-align: center; margin: 10px 0 10px;">
+                <h1>Christian Values School </h1><h1> Foundation, Inc. </h1>
+                {% for address in school_address %}
+                <h3 style="color: grey;">{{address.street}}, {{address.town}}, {{address.city}}, {{address.province}}</h3>
+                {% endfor %}
+            </div>
+
+            <strong>Contact Numbers:
+            {% for number in contact_numbers%}
+                {% if not forloop.last %}
+                {{number.contact_number}} /
+                {% endif %}
+                {% if forloop.last %}
+                {{number.contact_number}}
+                {% endif %}
+            {% endfor %}
+            <br>
+            Email:
+            {% for email in school_email%}
+                {% if not forloop.last %}
+                {{email.email}} /
+                {% endif %}
+                {% if forloop.last %}
+                {{email.email}}
+                {% endif %}
+            {% endfor %}
+            <br>
+            Office Hours:
+            {% for time in school_office_hours%}
+                {% if not forloop.last %}
+                From: {{time.starting_day}} to {{time.last_day}}, {{time.opening}} - {{time.closing}} /
+                {% endif %}
+                {% if forloop.last %}
+                {{time.get_starting_day_display}} to {{time.get_last_day_display}}, {{time.get_opening_display}} - {{time.get_closing_display}}
+                {% endif %}
+            {% endfor %}
+            </strong>
+      </p>
+    </section>
+    <!-- Section: Text -->
+
+
+        <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="https://www.facebook.com/christianvaluesschool.bacoorcavite" role="button"><i class="fab fa-facebook-f"></i></a>
+
+      <!-- Twitter -->
+      <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+
+      <!-- Google -->
+      <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39" href="#!" role="button"><i class="fab fa-google"></i></a>
+
+      <!-- Instagram -->
+      <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+
+      <!-- Linkedin -->
+      <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
+      <!-- Github -->
+      <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="#!" role="button"><i class="fab fa-github"></i></a>
+    </section>
+    <!-- Section: Social media -->
+
+
+    <!-- Section: Links -->
+    <section class="">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <!-- <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-dark">Link 1</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 2</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 3</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 4</a>
+            </li>
+          </ul>
+        </div> -->
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <!-- <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-dark">Link 1</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 2</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 3</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 4</a>
+            </li>
+          </ul>
+        </div> -->
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <!-- <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-dark">Link 1</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 2</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 3</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 4</a>
+            </li>
+          </ul>
+        </div> -->
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <!-- <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-dark">Link 1</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 2</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 3</a>
+            </li>
+            <li>
+              <a href="#!" class="text-dark">Link 4</a>
+            </li>
+          </ul>
+        </div> -->
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </section>
+    <!-- Section: Links -->
+
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    © 2021 Copyright:
+    <a class="text-dark" href="#">enter cvs site here</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->

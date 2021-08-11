@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="padding-top: 2rem; padding-bottom: 2rem;">
+    <h3>The following requirements must be submitted to the Registrar’s Office before admission to any academic program:</h3>
+
+    <h5>Transeferees</h5>
+    {{requirements.for_transferees|safe}}
+
+    <h5>Junior High School</h5>
+    {{requirements.for_jr_hs|safe}}
+
+    <h5>Foreign Student</h5>
+    {{requirements.for_foreign_student|safe}}
+</div>
+
+{% endblock content %}
