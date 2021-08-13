@@ -25,8 +25,42 @@ function smoothScroll(target, duration){
 
 }
 
+// targets
+var navbar = document.getElementById('navbar')
+var newsAndEvents = document.getElementById('news-and-events')
 var contactUsTarget = document.getElementById('contactUs')
 
+
+
+var contactUsButton = document.getElementById('contactUsButton')
+
 contactUsButton.addEventListener('click', function(){
-    smoothScroll(contactUsTarget.id, 1000)
+    smoothScroll(contactUsTarget.id, 100)
 })
+
+const backToTopBtn = document.getElementById('back-to-top-btn')
+
+backToTopBtn.addEventListener('click', function(){
+    smoothScroll(navbar.id, 100)
+})
+
+var eventBtn = document.getElementById('eventsButton')
+eventBtn.addEventListener('click', function(){
+    smoothScroll(newsAndEvents.id,100)
+})
+
+
+
+window.addEventListener('scroll', backToTop);
+
+// back to top function
+
+function  backToTop(){
+    // show button
+    if(window.pageYOffset > 300){
+        backToTopBtn.style.display = "block"
+    }
+    else {
+        backToTopBtn.style.display = "none"
+    }
+}
