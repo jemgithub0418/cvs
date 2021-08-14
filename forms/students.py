@@ -76,12 +76,6 @@ class StudentProfileCreationForm(forms.ModelForm):
 
 
 class StudentInfoForm(forms.Form):
-    adviser = forms.ModelChoiceField(
-        required=True,
-        widget=forms.Select,
-        queryset=StaffProfile.objects.select_related('user').filter(user__is_teacher=True, user__is_active= True),
-        )
-
     section = forms.ModelChoiceField(
         required= True,
         widget= forms.Select,

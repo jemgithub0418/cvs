@@ -1,5 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.conf import settings
+from django.db.models import Q
 # Create your models here.
 
 class YearLevel(models.Model):
@@ -18,16 +20,16 @@ class YearLevel(models.Model):
 
 class Section(models.Model):
     section_name = models.CharField(max_length= 100)
-    year_level = models.ForeignKey(YearLevel, on_delete=models.SET_NULL, null=True, blank= True)
-
+    year_level = models.ForeignKey(YearLevel, on_delete=models.CASCADE, null=True, blank= True)
+    adviser = models.ForeignKey(settings.AUTH_USER_MODEL,limit_choices_to=Q(is_teacher= True), on_delete= models.CASCADE, null= True, blank= True)
     def __str__(self):
-        return f'{self.year_level}, {self.section_name}'
+        return f'{self.year_level}, {self.section_name} class adviser: {self.adviser}'
 
 
 class Subject(models.Model):
     subject_name = models.CharField(max_length=255)
     subject_code = models.CharField(max_length= 55)
-    year_level = models.ForeignKey(YearLevel, on_delete=models.SET_NULL, null= True, blank= True)
+    year_level = models.ForeignKey(YearLevel, on_delete=models.CASCADE, null= True, blank= True)
     unit = models.PositiveSmallIntegerField()
 
     def __str__(self):

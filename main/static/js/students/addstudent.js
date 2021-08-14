@@ -25,9 +25,6 @@ function popAddStudentUserModal(){
         modalBody.innerHTML = ""
 
 
-        elementList = []
-        dataList = []
-
         var email = document.getElementById('id_email')
         // elementList.push(email)
         var firstName = document.getElementById('id_first_name')
@@ -40,15 +37,12 @@ function popAddStudentUserModal(){
         var dobDay = document.getElementById('id_dob_day').value
         var dobYear = document.getElementById('id_dob_year').value
         var address = document.getElementById('id_address')
-        var adviser = document.getElementById('id_adviser')
+        // var adviser = document.getElementById('id_adviser')
         var section = document.getElementById('id_section')
         var enrolledSubjects = document.querySelectorAll('input[name=enrolled_subjects]:checked');
         var dobDisplay = dobMonth.concat("-", dobDay, "-", dobYear)
 
-        console.log(adviser)
-        console.log(section)
-
-        var adviserText = adviser.options[adviser.selectedIndex].text;
+        // var adviserText = adviser.options[adviser.selectedIndex].text;
         var sectionText = section.options[section.selectedIndex].text;
 
         subjectList = []
@@ -72,10 +66,6 @@ function popAddStudentUserModal(){
 
         // console.log(subjectList)
 
-        elementList.push(
-            email, firstName, middleName, lastName, gender, lrnOrStudentNumber,contactNumber,
-            dobMonth, dobDay, dobYear, address, adviser, section, 
-            )
 
         var container = document.createElement('div')
         container.id = "data-container";
@@ -121,17 +111,9 @@ function popAddStudentUserModal(){
                     <div class="col-4">Address: </div>
                     <div class="col-6"> ${address.value}</div>
                 </div>
-                <div class="row">
-                    <div class="col-4">Adviser: </div>
-                    <div class="col-6"> ${adviserText}</div>
-                </div>
                 <div class="row" style="background-color: #f2f2f2;">
                     <div class="col-4">Section: </div>
                     <div class="col-6"> ${sectionText}</div>
-                </div>
-                <div class="row">
-                    <div class="col-4">Adviser: </div>
-                    <div class="col-6"> ${adviserText}</div>
                 </div>
                 <div class="row" style="background-color: #f2f2f2;">
                     <div class="col-4">Enrolled Subjects: </div>
@@ -162,7 +144,7 @@ function handleStudentProfileAndStudentInfo(){
         var dobDay = document.getElementById('id_dob_day').value
         var dobYear = document.getElementById('id_dob_year').value
         var address = document.getElementById('id_address').value
-        var adviser = document.getElementById('id_adviser').value
+        // var adviser = document.getElementById('id_adviser').value
         var section = document.getElementById('id_section').value
         var enrolledSubjects = document.querySelectorAll('input[name=enrolled_subjects]:checked');
         var dobDisplay = dobMonth.concat("-", dobDay, "-", dobYear)
@@ -207,7 +189,6 @@ function handleStudentProfileAndStudentInfo(){
             console.log("student profile detail with lrn: ",data)
             // save the student info 
             var urlCreateInfo= `/accounts/api/student/info/create/`
-
             fetch(urlCreateInfo, {
                 method: "POST",
                 headers: {
@@ -217,7 +198,7 @@ function handleStudentProfileAndStudentInfo(){
                 body: JSON.stringify({
                     "student": data.user.id,
                     "enrolled_subjects": subjectList,
-                    "adviser": adviser,
+                    // "adviser": adviser,
                     "profile" : data.id,
                     "section": section,
                 })
@@ -225,6 +206,8 @@ function handleStudentProfileAndStudentInfo(){
             .then((response)=> response.json())
             .then(function(data){
                 console.log("student info input data: ", data)
+                alert("Student Profile Successfully created.")
+                e.target.reset()
             })
         })
     })

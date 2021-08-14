@@ -34,14 +34,6 @@ class StudentProfile(models.Model):
 class Student(models.Model):
     student = models.OneToOneField(settings.AUTH_USER_MODEL, limit_choices_to= Q(is_student= True), on_delete= models.CASCADE)
     enrolled_subjects = models.ManyToManyField(Subject, null= True, blank= True)
-    adviser = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        limit_choices_to=Q(is_teacher= True), 
-        related_name="adviser", 
-        on_delete=models.CASCADE,
-        null= True,
-        blank= True,
-        )
     profile = models.OneToOneField(StudentProfile, on_delete=models.CASCADE)
     section = models.ForeignKey(Section, on_delete = models.CASCADE, blank=True, null=True)
 
