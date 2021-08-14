@@ -103,7 +103,7 @@ class CreateStudentProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudentProfile
-        fields = [
+        fields = ['id',
             'user', 'first_name', 'middle_name', 'last_name', 'gender', 'LRN_or_student_number',
             'date_of_birth', 'dob_day', 'dob_month', 'dob_year', 'contact_number', 'address',
         ]

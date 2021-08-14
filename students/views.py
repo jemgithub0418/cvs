@@ -34,3 +34,11 @@ class AddStudentInfo(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = CreateStudentInfoSerializer
     queryset = Student.objects.all()
+
+
+class StudentInfoDetail(generics.RetrieveUpdateAPIView):
+    authentication_classes= [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = CreateStudentProfileSerializer
+    queryset = StudentProfile.objects.all()
+    lookup_field = 'LRN_or_student_number'

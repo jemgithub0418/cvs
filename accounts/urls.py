@@ -3,7 +3,7 @@ from accounts.views import (
     register, UserProfileCreate, UserProfileDetail, 
     UserList, UserUpdate, BlogCreate, register_student,
     )
-from students.views import (AddNewStudent, AddStudentInfo)
+from students.views import (AddNewStudent, AddStudentInfo, StudentInfoDetail)
 
 app_name = 'accounts'
 
@@ -13,7 +13,8 @@ urlpatterns = [
 
     #student profile api
     path('api/student/profile/create/', AddNewStudent.as_view(), name='add-new-student'),
-    path('api/student/info/create',  AddStudentInfo.as_view(), name='add-student-info'),
+    path('api/student/info/create/',  AddStudentInfo.as_view(), name='add-student-info'),
+    path('api/student/profile/detail/<str:LRN_or_student_number>/', StudentInfoDetail.as_view(),name='student-info-detail'),
 
     #staff profile api
     path('api/user/profile/create/', UserProfileCreate.as_view(), name='userprofile-create'),

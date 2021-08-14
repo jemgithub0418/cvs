@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container" style="max-width: 50%;margin-top: 2rem;">
     <h4>Create Student Account</h4><hr>
-    <form>
+    <form id="student-form">
         {{studentuserform.email | as_crispy_field}}
 
         {{profileform.first_name | as_crispy_field }}
@@ -38,6 +38,32 @@
 
 
 </div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" onClick="popAddStudentUserModal()" data-bs-toggle="modal" data-bs-target="#add-student-modal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="add-student-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-student-modal-title">Confirm Data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="add-student-modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" onClick="saveUser()" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script type="text/javascript" src="{% static 'js/students/addstudent.js' %}"></script>
 {% endblock content %}
