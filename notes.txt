@@ -12,3 +12,10 @@ ung logout button gawing dropdown, andun na ung account settings change pass edi
 hindi nag cclose ung modal kapag save ng new user
 
 di maayos ung pag delete ng existing image sa schoologo model. dapat nadedelete ung current pag upload ng new logo
+
+
+binago ko ung user admin for now ...
+    nakakapag add ng user at staff profile
+    pinakita ko ung staff boolean
+    dapat pag gawa ng user depending on userlevel may profile agad siya
+    tinanggal ko ung readonly user sa staff profile

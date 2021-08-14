@@ -40,11 +40,32 @@
                         <li class="nav-item ">
                           <a class="nav-link" href="{% url 'accounts:register' %}">Add new staff</a>
                         </li>
+                        <li class="nav-item ">
+                          <a class="nav-link" href="{% url 'accounts:register-student' %}">Add new Student</a>
+                        </li>
                         <li class="nav-item">
                           <a class="nav-link" href="{% url 'cms' %}">Manage Web Content</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="{% url 'admin:index' %}" tabindex="-1">Admin Page</a>
+                        </li>
+
+                    </ul>
+                </div>
+            {% endif %}
+            {% if user.is_authenticated and user.is_student %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'my-grades' user.id %}">My Grades</a>
+                </li>
+            {% endif %}
+            {% if user.is_authenticated and user.is_registrar %}
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Registrar
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li class="nav-item ">
+                          <a class="nav-link" href="{% url 'accounts:register-student' %}">Add new Student</a>
                         </li>
                     </ul>
                 </div>

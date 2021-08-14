@@ -1,12 +1,19 @@
 from django.urls import path
 from accounts.views import (
-    register, UserProfileCreate, UserProfileDetail, UserList, UserUpdate, BlogCreate
+    register, UserProfileCreate, UserProfileDetail, 
+    UserList, UserUpdate, BlogCreate, register_student,
     )
+from students.views import (AddNewStudent, AddStudentInfo)
 
 app_name = 'accounts'
 
 urlpatterns = [
     path('register/', register, name='register'),
+    path('register/student/', register_student, name='register-student'),
+
+    #student profile api
+    path('api/student/profile/create/', AddNewStudent.as_view(), name='add-new-student'),
+    path('api/student/info/create',  AddStudentInfo.as_view(), name='add-student-info'),
 
     #staff profile api
     path('api/user/profile/create/', UserProfileCreate.as_view(), name='userprofile-create'),

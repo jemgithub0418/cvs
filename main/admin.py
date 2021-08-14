@@ -1,6 +1,9 @@
 from django.contrib import admin
-from .models import UpcomingEvents, VerseOfTheDay, Announcements, AdmissionRequirements, TuitionFees
-
+from .models import (
+    UpcomingEvents, VerseOfTheDay, Announcements, 
+    AdmissionRequirements, TuitionFees,
+    Section, Subject, SchoolPeriod, YearLevel,
+    )
 # Register your models here.
 
 class UpcomingEventsAdmin(admin.ModelAdmin):
@@ -27,12 +30,20 @@ class AdmissionRequirementsAdmin(admin.ModelAdmin):
         return False
 
 
+class SectionAdmin(admin.ModelAdmin):
+    fieldset = (
+            ("", {'fields':('section','year_level')})
+        )
+
+
 
 admin.site.register(UpcomingEvents, UpcomingEventsAdmin)
 admin.site.register(Announcements)
 admin.site.register(VerseOfTheDay, VerseOfTheDayAdmin)
 admin.site.register(AdmissionRequirements, AdmissionRequirementsAdmin)
 admin.site.register(TuitionFees)
-
-
+admin.site.register(YearLevel)
+admin.site.register(Subject)
+admin.site.register(SchoolPeriod)
+admin.site.register(Section, SectionAdmin)
 

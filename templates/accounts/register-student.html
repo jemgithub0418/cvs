@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container" style="max-width: 50%;margin-top: 2rem;">
+    <h4>Create Student Account</h4><hr>
+    <form>
+        {{studentuserform.email | as_crispy_field}}
+
+        {{profileform.first_name | as_crispy_field }}
+        {{profileform.middle_name | as_crispy_field }}
+        {{profileform.last_name | as_crispy_field }}
+        {{profileform.gender | as_crispy_field }}
+        {{profileform.LRN_or_student_number | as_crispy_field }}
+
+        <div class="row" id="mobilenumberrow">
+            <div class="col-1" style="margin-top: 1.5rem;"><span class="text-muted">+63</span></div>
+            <div class="col-11">
+                {{profileform.contact_number | as_crispy_field }}
+            </div>
+        </div>
+        <div class="row" id="dateofbirthrow">
+            <label for="dateofbirthrow">Date of Birth <small class="text-muted">MM/DD/YYYY</small></label>
+            <div class="col-5">{{profileform.dob_month | as_crispy_field}}</div>
+            <div class="col-2">{{profileform.dob_day | as_crispy_field}}</div>
+            <div class="col-5">{{profileform.dob_year | as_crispy_field}}</div>
+        </div>
+        {{profileform.address | as_crispy_field }}
+
+        <div class="row mt-4">
+            <h4>Student Class Info</h4><hr>
+            {{studentinfoform|crispy}}
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>        
+
+
+</div>
+
+<script type="text/javascript" src="{% static 'js/students/addstudent.js' %}"></script>
+{% endblock content %}

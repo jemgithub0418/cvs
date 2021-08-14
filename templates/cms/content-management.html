@@ -41,7 +41,7 @@
                         <h5>School Logo</h5>
                         <hr>
                         <small>On display: </small>
-                        <img src="{{logo.image.url}}" class="card-img-top" id="img" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br>
+                        <img src="{{logo.image.url}}" class="card-img-top" id="img-logo" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br>
                         <label for="inputGroupFile02">Change:</label>
                     <form action="{% url 'changelogo' %}" method="POST"  enctype="multipart/form-data" id="logo-form">
                         {% csrf_token %}

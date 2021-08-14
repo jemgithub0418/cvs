@@ -41,7 +41,7 @@ function popModal(){
 
 
         if( email == null || email == '' || userLevel == null || userLevel == '' ||
-            firstName == null || firstName == '' || middleName == null || middleName == '' || lastName == null || lastName == '' ||
+            firstName == null || firstName == '' || lastName == null || lastName == '' ||
              employeeNumber == null || employeeNumber == '' || mobileNumber == null || mobileNumber == '' || address == null || address == '' ){
             title.innerHTML = "Invalid!"
             body.innerHTML = "Please provide all needed information."
@@ -101,7 +101,7 @@ function popModal(){
         usercreationform.addEventListener('submit', function(e){
 
         e.preventDefault()
-        var url = "http://localhost:8000/accounts/api/user/profile/create/"
+        var url = "/accounts/api/user/profile/create/"
 
         fetch(url,{
             method: 'POST',

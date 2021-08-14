@@ -2,6 +2,45 @@ from django.db import models
 from ckeditor.fields import RichTextField
 # Create your models here.
 
+class YearLevel(models.Model):
+    year = models.CharField(max_length= 30)
+
+    def __str__(self):
+        return self.year
+
+    def save(self, *args, **kwargs):
+        for field_name in ['year']:
+            val = getattr(self,field_name, False)
+            if val:
+                setattr(self, field_name, val.capitalize())
+
+        super(YearLevel,self).save(*args,**kwargs)
+
+class Section(models.Model):
+    section_name = models.CharField(max_length= 100)
+    year_level = models.ForeignKey(YearLevel, on_delete=models.SET_NULL, null=True, blank= True)
+
+    def __str__(self):
+        return f'{self.year_level}, {self.section_name}'
+
+
+class Subject(models.Model):
+    subject_name = models.CharField(max_length=255)
+    subject_code = models.CharField(max_length= 55)
+    year_level = models.ForeignKey(YearLevel, on_delete=models.SET_NULL, null= True, blank= True)
+    unit = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return f"{self.subject_name}, ({self.subject_code}), for {self.year_level}"
+
+
+class SchoolPeriod(models.Model):
+    period = models.CharField(max_length= 55)
+
+    def __str__(self):
+        return self.period
+
+
 class UpcomingEvents(models.Model):
     date_of_event = models.DateField()
     time_of_event = models.TimeField()

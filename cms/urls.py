@@ -8,8 +8,8 @@ urlpatterns = [
     path('api/changelogo/', cms.ChangeLogo.as_view(), name='changelogo'), 
 
     #home carousel
-    path('api/home-carousel/', cms.HomeCarouselList.as_view(), name='carosel-list'),
-    path('api/home-carousel/detail/<int:pk>/', cms.HomeCarouselDetail.as_view(), name = 'caousel-detail'),
+    path('api/home-carousel/', cms.HomeCarouselList.as_view(), name='carousel-list'),
+    path('api/home-carousel/detail/<int:pk>/', cms.HomeCarouselDetail.as_view(), name = 'carousel-detail'),
     path('api/home-carousel/delete/<int:pk>/', cms.HomeCarouselDetail.as_view(), name = 'carousel-delete'),
     path('api/home-carousel/add/', cms.HomeCarouselList.as_view(), name= 'carousel-add'),
 

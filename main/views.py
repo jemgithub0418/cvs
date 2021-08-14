@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import sys
 from django.db.models import Q
 import datetime
 from cms.models import (
@@ -20,6 +21,8 @@ def index(request):
     header_image = SiteHeaderImage.objects.first()
     events = UpcomingEvents.objects.filter(Q(date_of_event__gte= datetime.date.today())).order_by('date_of_event')
     announcements = Announcements.objects.all().order_by('-date_posted')
+
+    print(sys.stderr, announcements)
 
     verse = VerseOfTheDay.objects.filter(display_during = day.weekday())
     context= {

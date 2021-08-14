@@ -11,6 +11,7 @@ from serializers.accounts import (
     UpdateStaffUserSerializer,
     BlogSerializer,
     )
+from forms.students import StudentCreationForm, StudentProfileCreationForm, StudentInfoForm
 
 #rest
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -67,6 +68,18 @@ def register(request):
         'userstaffprofile' : accounts.StaffProfileCreationForm(),
     }
     return render(request, 'accounts/register.html', context)
+
+
+def register_student(request):
+    profileform = StudentProfileCreationForm() 
+    studentuserform = StudentCreationForm()
+    studentinfoform = StudentInfoForm()
+    context= {
+        'profileform': profileform,
+        'studentuserform' : studentuserform,
+        'studentinfoform': studentinfoform,
+    }
+    return render(request,'accounts/register-student.html', context)
 
 
 ########################################################################## api overview ###########################################################################

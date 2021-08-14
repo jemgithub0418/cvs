@@ -15,7 +15,7 @@ class User(AbstractUser):
 
     email = models.EmailField(
     max_length=254,
-    unique=True,
+    unique=False,
     verbose_name='Email Address',
     blank=True,
     null=True,
@@ -38,7 +38,7 @@ class StaffProfile(models.Model):
             related_name= 'staffprofile',
         )
     first_name = models.CharField(max_length= 70,)
-    middle_name = models.CharField(max_length=70,)
+    middle_name = models.CharField(max_length=70, blank= True, null= True)
     last_name = models.CharField(max_length=70,)
     gender = models.CharField(
         max_length= 6,
