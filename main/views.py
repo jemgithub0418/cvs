@@ -7,8 +7,17 @@ from cms.models import (
         Mission, Vision, 
         ImageBesideMissionVision, SiteHeaderImage,
     )
-from .models import  UpcomingEvents, VerseOfTheDay, Announcements, AdmissionRequirements, TuitionFees
+from .models import  UpcomingEvents, VerseOfTheDay, Announcements, AdmissionRequirements, TuitionFees, SchoolPeriod
 
+from serializers.main import SchoolPeriodSerializer
+
+#rest
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.response import Response
+from rest_framework import generics
+from rest_framework.renderers import BrowsableAPIRenderer,TemplateHTMLRenderer
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 # Create your views here.
 def index(request):
@@ -52,3 +61,10 @@ def tuition(request):
         'tuition_fee_objects' : tuition_fee_objects,
     }
     return render(request, 'main/tuition.html', context)
+
+
+class SchoolPeriodList(generics.ListAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = SchoolPeriodSerializer
+    queryset = SchoolPeriod.objects.all()

@@ -34,7 +34,7 @@ function updateLogo(){
     .then((response) => response.json())
     .then(function(data){
 
-        const image = document.querySelector('#img')
+        var image = document.getElementById('img-logo')
         image.src = data[0].image
 
     })
@@ -66,7 +66,7 @@ function getLogoCard(){
 
         var image = document.createElement('img')
         image.src = data[0].image
-        image.id = 'img'
+        image.id = 'img-logo'
         image.classList.add('card-img-top')
         image.style.maxWidth = '10rem'
         image.style.maxHeight = '10rem'

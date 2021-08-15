@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from accounts.models import User, StaffProfile
 from students.models import StudentProfile
-from main.models import Subject, Section
+from main.models import Subject, Section, SchoolPeriod
 
 import datetime
 
@@ -87,4 +87,12 @@ class StudentInfoForm(forms.Form):
         widget= forms.CheckboxSelectMultiple,
         queryset= Subject.objects.prefetch_related('year_level').all(),
         # empty_label= None,
+        )
+
+
+class StudentGradeForm(forms.Form):
+    period = forms.ModelChoiceField(
+            required= True,
+            widget=forms.Select,
+            queryset = SchoolPeriod.objects.all()
         )
