@@ -559,7 +559,7 @@ function handleCarouselForm(id){
         var url = `/web-content/api/home-carousel/detail/${id}/`
 
         fetch(url, {
-            method: "patch",
+            method: "PATCH",
             headers : {
                 "Content-type" : 'application/json',
                 "X-CSRFToken": csrftoken,
