@@ -4,6 +4,16 @@ from django.conf import settings
 from django.db.models import Q
 # Create your models here.
 
+
+class GradeCSVFile(models.Model):
+    file_name = models.FileField(upload_to= 'grade csv files')
+    date_posted = models.DateTimeField(auto_now_add= True)
+    grades_uploaded = models.BooleanField(default= False)
+
+    def __str__(self):
+        return "id: " + str(self.id)
+
+
 class YearLevel(models.Model):
     year = models.CharField(max_length= 30)
 

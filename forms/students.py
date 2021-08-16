@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from accounts.models import User, StaffProfile
 from students.models import StudentProfile
-from main.models import Subject, Section, SchoolPeriod
+from main.models import Subject, Section, SchoolPeriod, GradeCSVFile
 
 import datetime
 
@@ -94,5 +94,14 @@ class StudentGradeForm(forms.Form):
     period = forms.ModelChoiceField(
             required= True,
             widget=forms.Select,
-            queryset = SchoolPeriod.objects.all()
+            queryset = SchoolPeriod.objects.all(),
         )
+
+
+class UploadCSVFileForm(forms.Form):
+    period = forms.ModelChoiceField(
+        required= True,
+        widget=forms.Select,
+        queryset = SchoolPeriod.objects.all(),
+    )
+    file_name = forms.FileField()

@@ -3,6 +3,7 @@ from .models import (
     UpcomingEvents, VerseOfTheDay, Announcements, 
     AdmissionRequirements, TuitionFees,
     Section, Subject, SchoolPeriod, YearLevel,
+    GradeCSVFile,
     )
 # Register your models here.
 
@@ -46,4 +47,5 @@ admin.site.register(YearLevel)
 admin.site.register(Subject)
 admin.site.register(SchoolPeriod)
 admin.site.register(Section, SectionAdmin)
+admin.site.register(GradeCSVFile)
 

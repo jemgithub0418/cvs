@@ -8,7 +8,20 @@
 
 {% block content %}
 <div class="container" style="max-width: 60%;margin-top: 3rem;">
-    <h4>My Advisory Class</h4>
+    <h4>My Advisory Class</h4> <a href="{% url 'generate-csv-for-my-class' user.id %}">generate csv file for this class</a>
+    <br><br>
+    <div class="row" style="max-width: 50%;">
+        <form action="{% url 'my-students' user.id %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h6>Upload grades using .csv file</h6>
+            {{csv_form.period | as_crispy_field}}
+            <div style="display: flex;">
+            {{csv_form.file_name | as_crispy_field}}
+            <button style="height: 35px; margin-top: 1rem;" type="submit" class="btn btn-sm btn-outline-secondary">Upload</button>
+            </div>
+        </form>
+    </div>
+
     <table class="table table-striped">
   <thead>
     <tr>
@@ -28,12 +41,16 @@
         <td>{{student.profile.first_name}}</td>
         <td>{{student.profile.last_name}}</td>
         <td>
-
-            <select class="form-select" id="student-{{student.id}}" aria-label="Default select example">
-                {% for subject in student.enrolled_subjects.all %}
-                    <option value="{{subject.id}}">{{subject.subject_name}}</option>
-                {% endfor %}
-            </select>
+            <div class="btn-group">
+                <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Subject List
+                </button>
+                <ul class="dropdown-menu" id="student-{{student.id}}">
+                    {% for subject in student.enrolled_subjects.all %}
+                        <li class="dropdown-item" data-id="{{subject.id}}">{{subject.subject_name}}</option>
+                    {% endfor %}
+                </ul>
+            </div>
         <td>
             <span style="color:blue;margin-left: 2rem;" data-id="{{student.id}}" id="{{student.id}}" type="button" data-bs-toggle="modal" data-bs-target="#grade-modal" onClick="getEnrolledSubjects(this.getAttribute('data-id'))"><i class="fas fa-plus"></i></span>
         </td>
@@ -53,9 +70,7 @@
 
       </div>
       <div class="modal-body" id="grade-modal-body">
-        <form>
-            {{grade_form | crispy}}
-        </form>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

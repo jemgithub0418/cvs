@@ -45,7 +45,7 @@
           </thead>
           <tbody>
               {% for s in student_grades %}
-              {% if s.period == 'Second Quarter' %}
+              {% if s.period.period == 'Second Quarter' %}
             <tr>
               <td>{{s.subject}}</td>
               <td>{{s.grade}}</td>
@@ -68,7 +68,7 @@
           </thead>
           <tbody>
               {% for s in student_grades %}
-              {% if s.period == 'Third Quarter' %}
+              {% if s.period.period == 'Third Quarter' %}
             <tr>
               <td>{{s.subject}}</td>
               <td>{{s.grade}}</td>
@@ -91,7 +91,7 @@
           </thead>
           <tbody>
               {% for s in student_grades %}
-              {% if s.period == 'Fourth Quarter' %}
+              {% if s.period.period == 'Fourth Quarter' %}
             <tr>
               <td>{{s.subject}}</td>
               <td>{{s.grade}}</td>
