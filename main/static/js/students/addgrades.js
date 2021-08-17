@@ -60,9 +60,11 @@
 // }
 
 function getEnrolledSubjects(id){
-    var enrolledSubjectsList = []
     var modalBody = document.getElementById('grade-modal-body')
-    var modalTitle = document.getElementById('grade-moda-title')
+    var modalTitle = document.getElementById('grade-modal-title')
+    var fullName = document.getElementById(`student-${id}`)
+    modalTitle.innerText = ""
+    modalTitle.innerText += "Grades of ".concat(fullName.getAttribute('data-name'))
     
     var bodyChildren = modalBody.children
     modalBody.innerHTML = ""
@@ -78,7 +80,18 @@ function getEnrolledSubjects(id){
     periodSelect.required = true
     periodSelect.id = "id_period"
     periodSelect.ariaLabel = "Defaul select example"
+    periodSelect.style.marginBottom = '2rem';
+    periodSelect.selectedIndex = 0;
+    var optionLabel = document.createElement('option')
+    optionLabel.innerText = "Select School Period"
+    periodSelect.append(optionLabel)
+
     modalBody.append(periodSelect)
+
+    var divGrades = document.createElement('div')
+    divGrades.classList.add('container')
+    divGrades.id='div-grades'
+    modalBody.append(divGrades)
 
     fetch("/accounts/api/school-period/list/",{
         method: "GET",
@@ -86,46 +99,77 @@ function getEnrolledSubjects(id){
     .then((response)=> response.json())
     .then(function(data){
 
+        for(i = 0; i < data.length ; i++){
+            var optionsForSchoolPeriod = document.createElement('option');
+            optionsForSchoolPeriod.value = data[i].id
+            optionsForSchoolPeriod.innerText = data[i].period
+            periodSelect.append(optionsForSchoolPeriod)
+            if(i == 0){
+                optionsForSchoolPeriod.selectedIndex = i ;
+            }
 
-    for(i=0; i < data.length; i++){
-       var option = document.createElement('option')
-       option.value = data[i].id
-       option.innerText = data[i].period
-       if(i = 0){
-        option.selected = true
-       }
-       periodSelect.append(option)
-    }
+        }
+
+
     })
-    var idHolder = "student-".concat(id)
-    enrolledSubjectsList = document.getElementById(idHolder).children
+    .then(function(){
+        fetch(`/accounts/api/student/grade/${id}/`, {
+            method: "GET",
+        })
+        .then((res) => res.json())
+        .then(function(data){
+            console.log(data)
 
-    console.log(enrolledSubjectsList)
-    for (var i=0; i<enrolledSubjectsList.length; i++){
-        console.log(enrolledSubjectsList[i].innerText)
+            // set change eventlistener for select
+            periodSelect.addEventListener('change', function(){
+                // loop thru data
+                divGrades.innerHTML = ""
 
-        var label = document.createElement('label')
-        label.innerText = enrolledSubjectsList[i].innerText.trim()
-        label.classList.add("remove-after",)
-        label.for = "input-".concat(enrolledSubjectsList[i].value)
-        modalBody.append(label)
-        var input = document.createElement('input')
-        input.id = "input-".concat(enrolledSubjectsList[i].getAttribute("data-id"))
-        input.type = "number"
-        input.min = "50.0"
-        input.max = "99.0"
-        input.step = "0.01"
-        input.required = true
-        input.classList.add("numberinput","form-control", "remove-after")
-        modalBody.append(input)
-    }
+                for(i = 0; i < data.length; i++ ){
+                    // display grades for certain school period
+                    if(periodSelect.value == data[i].period.id)
+                    {
+                        // item counter for removing hr line at the end
+                        // for rows and columns
+                        var rowDiv = document.createElement('div')
+                        rowDiv.classList.add('row')
+                        var colDivSubject = document.createElement('div')
+                        colDivSubject.classList.add('col-6')
+                        rowDiv.append(colDivSubject)
+                        var colDivGrade = document.createElement('div')
+                        colDivGrade.classList.add('col-6')
+                        rowDiv.append(colDivGrade)
+
+                        // creating subject label and grade span
+                        var subjectLabel = document.createElement('label')
+                        subjectLabel.innerText = data[i].subject.subject_name
+                        var subjectGrade = document.createElement('span')
+                        subjectGrade.innerText = data[i].grade
+                        // failing grade
+                        if(parseFloat(data[i].grade) < 75){
+                            rowDiv.style.backgroundColor = "rgb(255 38 38 / 91%)";
+                        }
+                        // warning for failing
+                        if(parseFloat(data[i].grade) < 80 && parseFloat(data[i].grade) >=75 ){
+                            rowDiv.style.backgroundColor = "rgb(253 159 3 / 70%)"
+                        }
+                        // passed
+                        if(parseFloat(data[i].grade) > 79){
+                            rowDiv.style.backgroundColor = "#16ca76"
+                        }
+
+                        // appending subject and grade on respective columns
+                        colDivSubject.append(subjectLabel)
+                        colDivGrade.append(subjectGrade)
+
+                        divGrades.append(rowDiv)
+                        if(i != data.length){
+                            divGrades.innerHTML += "<hr>"
+                        }
+                    }
+                }
+            })
+
+        })
+    })
 }
-
-
-
-
-// var modal = document.getElementById('grade-modal')
-
-// modal.addEventListener('shown.bs.modal', function(){
-
-// })

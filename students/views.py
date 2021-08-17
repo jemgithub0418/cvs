@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.conf import settings
 from .models import (StudentGrade, Student, StudentProfile)
-from serializers.students import CreateStudentProfileSerializer, CreateStudentInfoSerializer
+from serializers.students import (
+    CreateStudentProfileSerializer, CreateStudentInfoSerializer,StudentGradesSerializer,
+
+)
 from serializers.main import SubjectListCreateSerializer
 from main.models import Subject, Section, GradeCSVFile, SchoolPeriod
 from students.models import StudentGrade, StudentProfile
@@ -76,7 +79,7 @@ def mystudents(request, pk):
 
     teacher_section = Section.objects.get(adviser_id=pk)
     my_students = Student.objects.filter(section=teacher_section).prefetch_related("enrolled_subjects").select_related(
-        "section", "profile",
+        "section", "profile", "student",
         )
 
     # my_student = Student.objects.filter(section__section=)
@@ -164,3 +167,14 @@ class SubjectGetUpdate(generics.RetrieveUpdateAPIView):
     serializer_class = SubjectListCreateSerializer
     queryset = Subject.objects.all()
     lookup_field = 'pk'
+
+
+class StudentGradesDetail(generics.ListAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = StudentGrade.objects.all()
+    serializer_class = StudentGradesSerializer
+
+    def get_queryset(self):
+        student_id = self.kwargs['pk']
+        return StudentGrade.objects.filter(student_id= student_id)

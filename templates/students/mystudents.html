@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="container" style="max-width: 60%;margin-top: 3rem;">
-    <h4>My Advisory Class</h4> <a href="{% url 'generate-csv-for-my-class' user.id %}">generate csv file for this class</a>
+    <h4>My Advisory Class</h4> <a href="{% url 'generate-csv-for-my-class' user.id %}">generate csv file template for my class</a>
     <br><br>
     <div class="row" style="max-width: 50%;">
         <form action="{% url 'my-students' user.id %}" method="POST" enctype="multipart/form-data">
@@ -21,6 +21,7 @@
             </div>
         </form>
     </div>
+    <br>
 
     <table class="table table-striped">
   <thead>
@@ -30,7 +31,7 @@
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Enrolled Subjects</th>
-      <th scope="col">Add Grade</th>
+      <th scope="col">View Grade</th>
     </tr>
   </thead>
   <tbody>
@@ -45,14 +46,18 @@
                 <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Subject List
                 </button>
-                <ul class="dropdown-menu" id="student-{{student.id}}">
+                <ul class="dropdown-menu" id="student-{{student.student.id}}" data-name="{{student.profile.first_name}} {{student.profile.last_name}}">
                     {% for subject in student.enrolled_subjects.all %}
                         <li class="dropdown-item" data-id="{{subject.id}}">{{subject.subject_name}}</option>
                     {% endfor %}
                 </ul>
             </div>
         <td>
-            <span style="color:blue;margin-left: 2rem;" data-id="{{student.id}}" id="{{student.id}}" type="button" data-bs-toggle="modal" data-bs-target="#grade-modal" onClick="getEnrolledSubjects(this.getAttribute('data-id'))"><i class="fas fa-plus"></i></span>
+            <span style="color:blue;margin-left: 2rem;" data-id="{{student.student.id}}" id="{{student.student.id}}" type="button" data-bs-toggle="modal" data-bs-target="#grade-modal"
+            onclick="getEnrolledSubjects(this.getAttribute('data-id'))" 
+            >
+                <a href="#">view</a>
+            </span>
         </td>
     </tr>
     {% endfor %}
@@ -66,7 +71,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="grade-modal-title">Upload grades of </h5>
+        <h5 class="modal-title" id="grade-modal-title">Grades of </h5>
 
       </div>
       <div class="modal-body" id="grade-modal-body">
@@ -74,7 +79,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>

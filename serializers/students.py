@@ -2,6 +2,7 @@ from rest_framework import serializers
 import sys
 from accounts.models import User
 from students.models import StudentProfile, Student, StudentGrade
+from main.models import Subject, SchoolPeriod
 import datetime
 from forms.accounts import generate_password, generate_username
 from django.db import transaction
@@ -27,12 +28,6 @@ class CreateStudentSerializer(serializers.ModelSerializer):
 
 
 class CreateStudentInfoSerializer(serializers.ModelSerializer):
-    # student = serializers.StringRelatedField(many=False)
-    # adviser = serializers.StringRelatedField(many=False)
-    # profile = serializers.StringRelatedField(many=False)
-    # section = serializers.StringRelatedField(many=False)
-    # enrolled_subjects = serializers.StringRelatedField(many=True)
-
     class Meta:
         model = Student
         fields= [
@@ -133,7 +128,6 @@ class CreateStudentProfileSerializer(serializers.ModelSerializer):
         user = User.objects.create(**user_data)
 
 
-
         #for profile date of birth
         day = validated_data.get('dob_day')
         month = validated_data.get('dob_month')
@@ -150,3 +144,26 @@ class CreateStudentProfileSerializer(serializers.ModelSerializer):
         #print password and username on serverlog
         print(sys.stderr,"Username: ", username, "Password: ", password)
         return student
+
+
+class SchoolPeriodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= SchoolPeriod
+        fields= ['id', 'period']
+
+
+class SubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        fields = [
+            'id', 'subject_name', 'subject_code', 'year_level', 'unit',
+        ]
+
+
+class StudentGradesSerializer(serializers.ModelSerializer):
+    subject = SubjectSerializer(many= False)
+    period = SchoolPeriodSerializer(many=False)
+
+    class Meta:
+        model = StudentGrade
+        fields = ['id', 'student', 'period', 'subject', 'grade']

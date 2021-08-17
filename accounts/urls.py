@@ -5,7 +5,7 @@ from accounts.views import (
     )
 from students.views import (
         AddNewStudent, AddStudentInfo, StudentProfileInfoDetail, StudentInfoDetails,
-        SubjectListCreate, SubjectGetUpdate,
+        SubjectListCreate, SubjectGetUpdate,StudentGradesDetail,
     )
 from main.views import SchoolPeriodList
 
@@ -20,6 +20,9 @@ urlpatterns = [
     path('api/student/profile/detail/<int:pk>/', StudentProfileInfoDetail.as_view(),name='student-profile-detail'),
     path('api/student/info/create/',  AddStudentInfo.as_view(), name='add-student-info'),
     path('api/student/info/details/<int:pk>', StudentInfoDetails.as_view(), name='student-info-detail'),
+
+    #student grades api based on student id
+    path('api/student/grade/<int:pk>/', StudentGradesDetail.as_view(), name='student-grade-detail' ),
 
     #staff profile api
     path('api/user/profile/create/', UserProfileCreate.as_view(), name='userprofile-create'),
