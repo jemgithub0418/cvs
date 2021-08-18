@@ -20,110 +20,110 @@ function popAddStudentUserModal(){
     // var addNewStudentModal = document.getElementsById('')
     var modal = document.getElementById('add-student-modal')
 
-    modal.addEventListener('shown.bs.modal', function(){
-        var modalBody = document.getElementById('add-student-modal-body')
-        modalBody.innerHTML = ""
+    var modalBody = document.getElementById('add-student-modal-body')
+    modalBody.innerHTML = ""
 
 
-        var email = document.getElementById('id_email')
-        // elementList.push(email)
-        var firstName = document.getElementById('id_first_name')
-        var middleName = document.getElementById('id_middle_name')
-        var lastName = document.getElementById('id_last_name')
-        var gender = document.getElementById('id_gender')
-        var lrnOrStudentNumber = document.getElementById('id_LRN_or_student_number')
-        var contactNumber = document.getElementById('id_contact_number')
-        var dobMonth = document.getElementById('id_dob_month').value
-        var dobDay = document.getElementById('id_dob_day').value
-        var dobYear = document.getElementById('id_dob_year').value
-        var address = document.getElementById('id_address')
-        // var adviser = document.getElementById('id_adviser')
-        var section = document.getElementById('id_section')
-        var enrolledSubjects = document.querySelectorAll('input[name=enrolled_subjects]:checked');
-        var dobDisplay = dobMonth.concat("-", dobDay, "-", dobYear)
+    var email = document.getElementById('id_email')
+    // elementList.push(email)
+    var firstName = document.getElementById('id_first_name')
+    var middleName = document.getElementById('id_middle_name')
+    var lastName = document.getElementById('id_last_name')
+    var gender = document.getElementById('id_gender')
+    var lrnOrStudentNumber = document.getElementById('id_LRN_or_student_number')
+    var contactNumber = document.getElementById('id_contact_number')
+    var dobMonth = document.getElementById('id_dob_month').value
+    var dobDay = document.getElementById('id_dob_day').value
+    var dobYear = document.getElementById('id_dob_year').value
+    var address = document.getElementById('id_address')
+    // var adviser = document.getElementById('id_adviser')
+    var section = document.getElementById('id_section')
+    var enrolledSubjects = document.querySelectorAll('input[name=enrolled_subjects]:checked');
+    var dobDisplay = dobMonth.concat("-", dobDay, "-", dobYear)
 
-        // var adviserText = adviser.options[adviser.selectedIndex].text;
-        var sectionText = section.options[section.selectedIndex].text;
+    // var adviserText = adviser.options[adviser.selectedIndex].text;
+    var sectionText = section.options[section.selectedIndex].text;
 
-        subjectList = []
-        for(var i = 0; i< enrolledSubjects.length; i++){
-            subjectList.push(enrolledSubjects[i].value)
-        }
+    subjectList = []
+    for(var i = 0; i< enrolledSubjects.length; i++){
+        subjectList.push(enrolledSubjects[i].value)
+    }
 
-        // console.log(enrolledSubjects[0].id)
-        // var labels = document.querySelectorAll("[name='enrolled_subjects']");
-        // var subjectList = [];
-        // console.log(labels)
-        // console.log(enrolledSubjects)
-        // for (var i = 0; i < labels.length; i++) {
-        //     var items = document.querySelectorAll('input[name=enrolled_subjects]:checked');
-        //     // console.log(items[i].value)
-        //     if(labels[i].getAttribute("for") == items[i].id) {
-        //         console.log(labels[i].innerText);
-        //         subjectList.push(label.innerText);
-        //     }
-        // }
+    // console.log(enrolledSubjects[0].id)
+    // var labels = document.querySelectorAll("[name='enrolled_subjects']");
+    // var subjectList = [];
+    // console.log(labels)
+    // console.log(enrolledSubjects)
+    // for (var i = 0; i < labels.length; i++) {
+    //     var items = document.querySelectorAll('input[name=enrolled_subjects]:checked');
+    //     // console.log(items[i].value)
+    //     if(labels[i].getAttribute("for") == items[i].id) {
+    //         console.log(labels[i].innerText);
+    //         subjectList.push(label.innerText);
+    //     }
+    // }
 
-        // console.log(subjectList)
-
-
-        var container = document.createElement('div')
-        container.id = "data-container";
+    // console.log(subjectList)
 
 
+    var container = document.createElement('div')
+    container.id = "data-container";
 
-        modalBody.innerHTML= `
-            <small class="text-muted">Please review all information before saving data. The username and password for this account will be sent to the email provided below.</small> <br/>
-            <div class="container">
-                <div class="row" style="background-color: #f2f2f2;">
-                    <div class="col-4">Email: </div>
-                    <div class="col-6">${email.value}</div>
-                </div>
-                <div class="row">
-                    <div class="col-4">First Name: </div>
-                    <div class="col-6">${firstName.value}</div>
-                </div>
-                <div class="row" style="background-color: #f2f2f2;">
-                    <div class="col-4">Middle Name: </div>
-                    <div class="col-6"> ${middleName.value}</div>
-                </div>
-                <div class="row">
-                    <div class="col-4">Last Name: </div>
-                    <div class="col-6">${lastName.value}</div>
-                </div>
-                <div class="row" style="background-color: #f2f2f2;">
-                    <div class="col-4">Gender: </div>
-                    <div class="col-6"> ${gender.value}</div>
-                </div>
-                <div class="row">
-                    <div class="col-4">LRN or Student Number: </div>
-                    <div class="col-6">${lrnOrStudentNumber.value}</div>
-                </div>
-                <div class="row" style="background-color: #f2f2f2;">
-                    <div class="col-4">Date of Birth: </div>
-                    <div class="col-6"> ${dobDisplay}</div>
-                </div>
-                <div class="row">
-                    <div class="col-4">Contact Number: </div>
-                    <div class="col-6">${contactNumber.value}</div>
-                </div>
-                <div class="row" style="background-color: #f2f2f2;">
-                    <div class="col-4">Address: </div>
-                    <div class="col-6"> ${address.value}</div>
-                </div>
-                <div class="row" style="background-color: #f2f2f2;">
-                    <div class="col-4">Section: </div>
-                    <div class="col-6"> ${sectionText}</div>
-                </div>
-                <div class="row" style="background-color: #f2f2f2;">
-                    <div class="col-4">Enrolled Subjects: </div>
-                    <div class="col-6"> ${subjectList}</div>
-                </div>
+
+
+    modalBody.innerHTML= `
+        <small class="text-muted">Please review all information before saving data. The username and password for this account will be sent to the email provided below.</small> <br/>
+        <div class="container">
+            <div class="row" style="background-color: #f2f2f2;">
+                <div class="col-4">Email: </div>
+                <div class="col-6">${email.value}</div>
             </div>
+            <div class="row">
+                <div class="col-4">First Name: </div>
+                <div class="col-6">${firstName.value}</div>
+            </div>
+            <div class="row" style="background-color: #f2f2f2;">
+                <div class="col-4">Middle Name: </div>
+                <div class="col-6"> ${middleName.value}</div>
+            </div>
+            <div class="row">
+                <div class="col-4">Last Name: </div>
+                <div class="col-6">${lastName.value}</div>
+            </div>
+            <div class="row" style="background-color: #f2f2f2;">
+                <div class="col-4">Gender: </div>
+                <div class="col-6"> ${gender.value}</div>
+            </div>
+            <div class="row">
+                <div class="col-4">LRN or Student Number: </div>
+                <div class="col-6">${lrnOrStudentNumber.value}</div>
+            </div>
+            <div class="row" style="background-color: #f2f2f2;">
+                <div class="col-4">Date of Birth: </div>
+                <div class="col-6"> ${dobDisplay}</div>
+            </div>
+            <div class="row">
+                <div class="col-4">Contact Number: </div>
+                <div class="col-6">${contactNumber.value}</div>
+            </div>
+            <div class="row" style="background-color: #f2f2f2;">
+                <div class="col-4">Address: </div>
+                <div class="col-6"> ${address.value}</div>
+            </div>
+            <div class="row" style="background-color: #f2f2f2;">
+                <div class="col-4">Section: </div>
+                <div class="col-6"> ${sectionText}</div>
+            </div>
+            <div class="row" style="background-color: #f2f2f2;">
+                <div class="col-4">Enrolled Subjects: </div>
+                <div class="col-6"> ${subjectList}</div>
+            </div>
+        </div>
 
-        `
-        handleStudentProfileAndStudentInfo()
-    })
+    `
+
+    handleStudentProfileAndStudentInfo()
+
 
 }
 
@@ -183,10 +183,6 @@ function handleStudentProfileAndStudentInfo(){
         })
         .then((response)=>response.json())
         .then(function(data){
-            console.log("student profile details: ",data)
-            var urlForLrn = `/accounts/api/student/profile/detail/${data.id}/`
-
-            console.log("student profile detail with lrn: ",data)
             // save the student info 
             var urlCreateInfo= `/accounts/api/student/info/create/`
             fetch(urlCreateInfo, {
@@ -205,7 +201,6 @@ function handleStudentProfileAndStudentInfo(){
             })
             .then((response)=> response.json())
             .then(function(data){
-                console.log("student info input data: ", data)
                 alert("Student Profile Successfully created.")
                 e.target.reset()
             })

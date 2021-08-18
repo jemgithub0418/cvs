@@ -118,7 +118,6 @@ function getEnrolledSubjects(id){
         })
         .then((res) => res.json())
         .then(function(data){
-            console.log(data)
 
             // set change eventlistener for select
             periodSelect.addEventListener('change', function(){
@@ -127,9 +126,8 @@ function getEnrolledSubjects(id){
 
                 for(i = 0; i < data.length; i++ ){
                     // display grades for certain school period
-                    if(periodSelect.value == data[i].period.id)
-                    {
-                        // item counter for removing hr line at the end
+                    if(periodSelect.value == data[i].period.id){
+
                         // for rows and columns
                         var rowDiv = document.createElement('div')
                         rowDiv.classList.add('row')
@@ -169,7 +167,6 @@ function getEnrolledSubjects(id){
                     }
                 }
             })
-
         })
     })
 }

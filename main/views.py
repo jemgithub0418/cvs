@@ -31,9 +31,10 @@ def index(request):
     events = UpcomingEvents.objects.filter(Q(date_of_event__gte= datetime.date.today())).order_by('date_of_event')
     announcements = Announcements.objects.all().order_by('-date_posted')
 
-    print(sys.stderr, announcements)
+    # this is how you print on dev server
+    # print(sys.stderr, announcements)
 
-    verse = VerseOfTheDay.objects.filter(display_during = day.weekday())
+    verse = VerseOfTheDay.objects.filter(display_during = day.weekday()+1)
     context= {
         'carousel_pics': carousel_pics,
         'mission': mission,

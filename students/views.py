@@ -9,6 +9,7 @@ from serializers.main import SubjectListCreateSerializer
 from main.models import Subject, Section, GradeCSVFile, SchoolPeriod
 from students.models import StudentGrade, StudentProfile
 from accounts.models import User
+from forms.students import UploadCSVFileForm
 
 import csv
 from django.http import HttpResponse
@@ -24,10 +25,12 @@ from forms.students import StudentGradeForm, UploadCSVFileForm
 
 # Create your views here.
 def mygrades(request, pk):
+    period_form = UploadCSVFileForm()
     student_grades = get_list_or_404(StudentGrade, student_id=pk)
 
     context = {
         'student_grades' : student_grades,
+        'period_form' : period_form,
     }
     return render(request,'students/mygrade.html',context)
 
@@ -36,8 +39,8 @@ def mystudents(request, pk):
     if request.method == "POST":
         csv_form = UploadCSVFileForm(request.POST or None, request.FILES or None)
         if csv_form.is_valid():
-            period = csv_form.cleaned_data.get('period')
-            print(period)
+            period = csv_form.cleaned_data.get('period') #"First Grading"
+
             period = SchoolPeriod.objects.get(period = period)
             # save csv file
             uploaded_file = csv_form.cleaned_data.get('file_name')
@@ -56,15 +59,17 @@ def mystudents(request, pk):
                     else:
                         subject = Subject.objects.get(subject_name = row[3])
                         profile = get_object_or_404(StudentProfile, LRN_or_student_number = row[0])
+                        # print(profile)
 
                         new_grade = StudentGrade(
-                            student=profile.student.student,
+                            student=  profile.student.student,#user instace
                             period = period,
                             subject = subject,
                             grade = row[4],
                             )
 
                         grade_list.append(new_grade)
+
                         # this is slow
                         # new_grade = StudentGrade.objects.create(
                         #     student=profile.student.student,

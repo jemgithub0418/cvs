@@ -95,6 +95,7 @@ class StudentGradeForm(forms.Form):
             required= True,
             widget=forms.Select,
             queryset = SchoolPeriod.objects.all(),
+
         )
 
 
@@ -103,5 +104,6 @@ class UploadCSVFileForm(forms.Form):
         required= True,
         widget=forms.Select,
         queryset = SchoolPeriod.objects.all(),
+        label="School Period",
     )
     file_name = forms.FileField()

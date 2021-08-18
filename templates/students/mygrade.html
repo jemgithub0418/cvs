@@ -1,12 +1,32 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block footer %}
+
+{% endblock footer %}
 
 {% block content %}
-
-
-
 <div class="container">
-    <h1>My grades</h1><br>
-  <div class="row">
+    <h1 id="id-holder" data-id="{{user.id}}">My grades</h1><br>
+    <div style="max-width: 20%;">
+    {{period_form.period|as_crispy_field}}
+    </div>
+    <div class="container" id="grade-div" style="max-width: 65%; min-width: 65%;text-align: center;" >
+
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+  <script type="text/javascript" src="{% static 'js/students/mygrades.js' %}"></script>
+{% endblock script %}
+
+
+<!--  <div class="row">
     <div class="col-sm mb-5">
         <table class="table table-sm">
           <thead>
@@ -22,7 +42,9 @@
           <tbody>
               {% for s in student_grades %}
               {% if s.period.period == 'First Quarter' %}
-            <tr>
+            <tr {% if s.grade < 75 %} style="background-color: rgb(255 38 38 / 91%);" {% endif %}
+                {% if s.grade >= 75 and s.grade < 80 %} style="background-color:rgb(253 159 3 / 70%)" {% endif %}
+                {% if s.grade > 79 %} style="background-color: #16ca76" {% endif %}>
               <td>{{s.subject}}</td>
               <td>{{s.grade}}</td>
             </tr>
@@ -46,7 +68,9 @@
           <tbody>
               {% for s in student_grades %}
               {% if s.period.period == 'Second Quarter' %}
-            <tr>
+            <tr{% if s.grade < 75 %} style="background-color: rgb(255 38 38 / 91%);" {% endif %}
+                {% if s.grade >= 75 and s.grade < 80 %} style="background-color:rgb(253 159 3 / 70%)" {% endif %}
+                {% if s.grade > 79 %} style="background-color: #16ca76" {% endif %}>
               <td>{{s.subject}}</td>
               <td>{{s.grade}}</td>
             </tr>
@@ -69,7 +93,9 @@
           <tbody>
               {% for s in student_grades %}
               {% if s.period.period == 'Third Quarter' %}
-            <tr>
+            <tr{% if s.grade < 75 %} style="background-color: rgb(255 38 38 / 91%);" {% endif %}
+                {% if s.grade >= 75 and s.grade < 80 %} style="background-color:rgb(253 159 3 / 70%)" {% endif %}
+                {% if s.grade > 79 %} style="background-color: #16ca76" {% endif %}>
               <td>{{s.subject}}</td>
               <td>{{s.grade}}</td>
             </tr>
@@ -92,7 +118,9 @@
           <tbody>
               {% for s in student_grades %}
               {% if s.period.period == 'Fourth Quarter' %}
-            <tr>
+            <tr{% if s.grade < 75 %} style="background-color: rgb(255 38 38 / 91%);" {% endif %}
+                {% if s.grade >= 75 and s.grade < 80 %} style="background-color:rgb(253 159 3 / 70%)" {% endif %}
+                {% if s.grade > 79 %} style="background-color: #16ca76" {% endif %}>
               <td>{{s.subject}}</td>
               <td>{{s.grade}}</td>
             </tr>
@@ -101,7 +129,4 @@
           </tbody>
           </table>
     </div>
-  </div>
-</div>
-
-{% endblock %}
+  </div> -->
