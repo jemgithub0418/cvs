@@ -23,19 +23,19 @@ class UserAdmin(UserAdmin):
             'fields': ('email', 'username', 'password',),
         }),
         ('User Role', {'fields': ('is_active', 'is_registrar',
-                                  'is_teacher', 'is_superuser', 'is_student',)}),
+                                  'is_teacher', 'is_superuser', 'is_student','is_staff')}),
     )
 
     list_display = ('username', 'email', 'is_active',)
     list_display_links = ('username', 'email',)
     list_filter = ('is_active',)  # removed is_student here
 
-    def has_add_permission(self, request, obj=None):
-        return False
+    # def has_add_permission(self, request, obj=None):
+    #     return False
 
 
 class StaffProfileAdmin(admin.ModelAdmin):
-    readonly_fields =['user']
+    # readonly_fields =['user']
     fieldsets = (
         ('', {'fields':('user','first_name', 'middle_name', 'last_name', 'gender', 'employee_number','mobile_number','date_of_birth','address')}),
     )
@@ -44,7 +44,7 @@ class StaffProfileAdmin(admin.ModelAdmin):
     def has_add_permission(self, request, obj=None):
         return False
 
-admin.site.register(Blog)
+# admin.site.register(Blog)
 admin.site.register(User, UserAdmin)
 admin.site.register(StaffProfile, StaffProfileAdmin)
 admin.site.unregister(Group)

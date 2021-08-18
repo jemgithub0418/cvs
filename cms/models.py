@@ -1,5 +1,7 @@
 import os
 from django.db import models
+from ckeditor.fields import RichTextField
+
 
 # Create your models here.
 def UploadToPathAndRename(instance, filename):
@@ -48,7 +50,8 @@ class HomeCarousel(models.Model):
 
 
 class Mission(models.Model):
-    mission = models.TextField(max_length= 1000)
+    mission = RichTextField()
+    # mission = models.TextField(max_length= 1000)
 
     class Meta:
         verbose_name_plural = 'Mission'
@@ -58,7 +61,8 @@ class Mission(models.Model):
 
 
 class Vision(models.Model):
-    vision = models.TextField(max_length = 1000)
+    # vision = models.TextField(max_length = 1000)
+    vision = RichTextField()
 
     class Meta:
         verbose_name_plural = 'Vision'
@@ -96,3 +100,84 @@ class SiteHeaderImage(models.Model):
 
     def __str__(self):
         return "Change Site Header Image"
+
+
+class SchoolContactNumbers(models.Model):
+    contact_number = models.CharField(max_length= 15)
+
+    class Meta:
+        verbose_name_plural = 'Contact Numbers'
+
+    def __str__(self):
+        return self.contact_number
+
+class SchoolAddress(models.Model):
+    street = models.CharField(max_length= 55)
+    town = models.CharField(max_length= 55)
+    city = models.CharField(max_length= 55)
+    province = models.CharField(max_length= 55)
+
+    class Meta:
+        verbose_name_plural = "School Address"
+
+    def __str__(self):
+        return f"School Address: {self.town}"
+
+class SchoolEmail(models.Model):
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email
+
+class SchoolOfficeHours(models.Model):
+    DAY_CHOICES = [
+        (1, 'Monday'),
+        (2, 'Tuesday'),
+        (3, 'Wednesday'),
+        (4, 'Thursday'),
+        (5, 'Friday'),
+        (6, 'Saturday'),
+        (7, 'Sunday')
+    ]
+
+    HOUR_CHOICES = [
+        (1,'6AM'),
+        (2,'7AM'),
+        (3,'8AM'),
+        (4,'9AM'),
+        (5,'10AM'),
+        (6,'11AM'),
+        (7,'12NN'),
+        (8,'1PM'),
+        (9,'2PM'),
+        (10,'3PM'),
+        (11,'4PM'),
+        (12,'5PM'),
+        (13,'6PM'),
+        (14,'7PM'),
+        (15,'8PM'),
+        (16,'9PM'),
+    ]
+
+    starting_day = models.PositiveSmallIntegerField(
+            choices = DAY_CHOICES,
+            default = '1',
+        )
+    last_day = models.PositiveSmallIntegerField(
+            choices = DAY_CHOICES,
+            default = '5'
+        )
+    opening = models.PositiveSmallIntegerField(
+            choices = HOUR_CHOICES,
+            default = '3',
+        )
+    closing = models.PositiveSmallIntegerField(
+            choices = HOUR_CHOICES,
+            default = '12'
+        )
+
+    class Meta:
+        verbose_name_plural = 'School Office Hours'
+
+    def __str__(self):
+        return f"School Office Hours: from {self.get_starting_day_display()} to {self.get_last_day_display()}, {self.get_opening_display()} - {self.get_closing_display()}"

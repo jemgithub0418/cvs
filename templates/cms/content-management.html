@@ -4,8 +4,12 @@
 
 
 {% block script %}
-    <script type="text/javascript" src="{% static 'js/cms/cms.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/cms/cms.js' %}"></script>
 {% endblock %}
+
+{% block footer %}
+<!-- keep this empty if you dont want to have the footer in this page -->
+{% endblock footer %}
 
 
 {% block style %}
@@ -14,9 +18,9 @@
 
 {% block content %}
 <div class="container">
-    <div class="sticky-sidebar-page">            
+    <div class="sticky-sidebar-page">
         <div class="sidebar">
-            <h3>Manage Site Contents</h3>   
+            <h3>Manage Site Contents</h3>
             <div class="list-group">
                 <button class="list-group-item list-group-item-action active" aria-current="true" onClick="showHomeContent()" id="homeButton">Home</button>
                 <button class="list-group-item list-group-item-action" aria-current="true" onClick="showAboutContent()" id="aboutButton">About</button>
@@ -29,15 +33,15 @@
         <div class="sandbox">
             <div class="page-content" id="page-content">
 
-
-                <!-- SCHOOL LOGO -->            
+                <!-- SCHOOL LOGO -->           
 
 
                 <div class="card" id="school-logo">
                     <div class="card-body">
                         <h5>School Logo</h5>
+                        <hr>
                         <small>On display: </small>
-                        <img src="{{logo.image.url}}" class="card-img-top" id="img" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br> 
+                        <img src="{{logo.image.url}}" class="card-img-top" id="img-logo" alt="..." style="max-width: 10rem; max-height: 10rem;"> <br>
                         <label for="inputGroupFile02">Change:</label>
                     <form action="{% url 'changelogo' %}" method="POST"  enctype="multipart/form-data" id="logo-form">
                         {% csrf_token %}
@@ -45,32 +49,43 @@
                             <input type="file" name="image" class="form-control" required id="inputGroupFile02">
                             <button type="submit" class="input-group-text" for="inputGroupFile02">Upload
                             </button>
-                        </div>             
+                        </div>
                     </form>
                     </div>
                 </div>
 
 
                 <!-- HOME CAROUSEL -->
-                
+
                 <div class="card" id="carousel">
                     <div class="card-body"> 
-                        <h5>Home Carousel</h5>
-
+                        <div class="row" style="display: flex;">
+                            <div class="col-8">
+                                <h5>Home Carousel</h5>
+                            </div>
+                            <div class="col-4">
+                                <span style="color:blue; float: right;" title="Click to add new image.">
+                                    <i class="fas fa-plus" onClick="popCreateCarouselModal()" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <hr>
                         {% for pic in carouselpics %}
                             <small>On display: </small>
-                            <img id="img-{{pic.id}}" src="{{pic.image.url}}" class="card-img-top" alt="..." style="max-width: 15rem; max-height: 15rem;"> <br>  
-                            Label: {{pic.label}} <br>
-                            Content: {{pic.content}}<br>
+                            <img id="img-{{pic.id}}" src="{{pic.image.url}}" class="card-img-top" alt="..." style="max-width: 15rem; max-height: 15rem;"> <br> 
+                            <span>Label:</span>
+                            <span id="label-{{pic.id}}">{{pic.label}} </span><br>
+                            <span>Content:</span>
+                            <span id="content-{{pic.id}}">{{pic.content}}</span><br>
                             <span style="font-size: 20px;">
                                 <span style="color: red;">  
-                                   <i class="fas fa-trash-alt"></i>
+                                   <i data-id="{{pic.id}}" data-process="delete"  class="fas fa-trash-alt"  onClick="popDeleteCarouselModal(this.getAttribute('data-id'))" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
                                 </span>
                                 <span style="color:brown"> 
-                                    <i class="far fa-edit"></i>
+                                    <i data-id="{{pic.id}}" data-process="update" onClick="popCarouselDetailModal(this.getAttribute('data-id'))" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#exampleModal" class="far fa-edit"></i>
                                 </span>
                             </span>
-                            <br>    
+                            <br>
                             <hr>
                         {% endfor %}
 
@@ -82,14 +97,15 @@
 
                 <div class="card" id="mission">
                     <div class="card-body">
-                        <h5>Mission</h5>
+                        <h5>Mission</h5><hr>
                         <small>On display: </small>
-                        <p id="mission-content">
-                            {{mission.mission}}
-                        </p>
+                        <div id="mission-content">
+                            {{mission.mission|safe}}
+
+                        </div>
                         <span style="font-size: 20px;">
                             <span style="color:brown">
-                                <i onClick="popMissionModal()" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+                                <i onClick="popMissionModal()" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#missionModal"></i>
                             </span>
                         </span>
                         <br>
@@ -101,18 +117,96 @@
                 <!-- Vision -->
                 <div class="card" id="vision">
                     <div class="card-body">
-                        <h5>Vision</h5>
+                        <h5>Vision</h5> <hr>
                         <small>On display: </small>
-                        <p id="vision-content">
-                            {{vision.vision}}
-                        </p>
+                        <div id="vision-content">
+                            {{vision.vision|safe}}
+                        </div>
                         <span style="font-size: 20px;">
                             <span style="color:brown">
-                                <i onClick="popVisionModal()" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+                                <i onClick="popVisionModal()" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#visionModal"></i>
                             </span>
                         </span>
                         <br>
 
+                    </div>
+                </div>
+
+
+                <!-- office hours -->
+                <div class="card" id="office-hours-card">
+                    <div class="card-body" id="office-hours-card-body">
+                        <h5>School Office Hours</h5>
+                        <hr>
+                        <small>On display: </small>
+                        <div id="office-hours-content">
+                            From 
+                            {{office_hours.get_starting_day_display}} to {{office_hours.get_last_day_display}}, {{office_hours.get_opening_display}} - {{office_hours.get_closing_display}}
+                        </div>
+                        <span style="font-size: 20px;">
+                            <span style="color:brown">
+                                <i onClick="popOfficeHoursModal()" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#office-hours-modal"></i>
+                            </span>
+                        </span>
+                        <br>
+
+                    </div>
+                </div>
+
+
+                <!-- School address -->
+                <div class="card" id="school-address-card">
+                    <div class="card-body" id="school-address-card-body">
+                        <h5>School Address</h5>
+                        <hr>
+                        <small>On display: </small>
+                        <div id="school-address-content">
+                            {{school_address.street}}, {{school_address.town}}, {{school_address.city}}, {{school_address.province}}
+                        </div>
+                        <span style="font-size: 20px;">
+                            <span style="color:brown">
+                                <i onClick="popSchoolAddressModal()" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#school-address-modal"></i>
+                            </span>
+                        </span>
+                        <br>
+
+                    </div>
+                </div>
+
+
+
+                <!-- School Contact Numbers -->
+                <div class="card" id="school-contact-number-card">
+                    <div class="card-body" id="school-contact-number-card-body">
+                        <div class="row" style="display: flex;">
+                            <div class="col-10">
+                                <h5>School Contact Number(s)</h5>
+                            </div>
+                            <div class="col-2">
+                                <span style="color:blue; float: right;" title="Click to add new Contact Number.">
+                                    <i class="fas fa-plus" onClick="popAddSchoolContactNumberModal()" type="button" data-bs-toggle="modal" data-bs-target="#add-school-contact-number-modal"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <hr>
+                        <small>On display: </small>
+                        <div id="school-contact-number-content">
+                            {% for number in school_contact_numbers %}
+                                    <span>Contact Number {{forloop.counter}}:</span> <span>{{number.contact_number}}</span>
+                                    <br>
+                                    <span style="font-size: 20px;">
+                                        <span style="color: red;">  
+                                           <i data-id="{{number.id}}" class="fas fa-trash-alt" type="button" data-bs-toggle="modal" data-bs-target="#school-contact-number-modal"></i>
+                                        </span>
+                                        <span style="color:brown">
+                                            <i data-id="{{number.id}}" type="button" class="far fa-edit" data-bs-toggle="modal" data-bs-target="#school-contact-number-modal"></i>
+                                        </span>
+                                    </span>
+                                {% if not forloop.last %}
+                                    <hr>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
 
@@ -124,7 +218,7 @@
 
 <!-- Modal -->
 <div class="container" id="web-content-modal">
-    <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 600px; position:fixed; left:50%; transform: translate(-50%,0);" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" style="margin-top: 200px; max-height: 400px; position:fixed; left:50%; transform: translate(-50%,0);" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -143,6 +237,128 @@
 </div>
 
 
+<!-- mission modal -->
+    <div class="modal fade" id="missionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-title">Update School Mission</h5>
+          </div>
+          <div class="modal-body" id="modal-body">
+
+            <form method="POST" id="mission-form" action=`/web-content/api/update-mission/{{mission.id}}/`>
+                {% csrf_token %}
+                {{missionform.media}}
+                {{missionform.as_p}}
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" for="mission-form" onClick="saveMissionModal()" class="btn btn-primary" id="saveButton">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<!-- vision modal -->
+    <div class="modal fade" id="visionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-title">Update School Vision</h5>
+          </div>
+          <div class="modal-body" id="modal-body">
+
+            <form method="POST" id="vision-form" action=`/web-content/api/update-vision/{{vision.id}}/`>
+                {% csrf_token %}
+                {{visionform.media}}
+                {{visionform.as_p}}
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" for="vision-form" onClick="saveVisionModal()" class="btn btn-primary" id="saveButton">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- office hours modal -->
+    <div class="modal fade" id="office-hours-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-title">Update Office Hours Schedule</h5>
+          </div>
+          <div class="modal-body" id="modal-body">
+
+            <form id="office-hours-form" action=`/web-content/api/office-hours/update/{{office_hours.id}}/`>
+                {% csrf_token %}
+                {{office_hours_form|crispy}}
+               
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" for="office-hours-form" onClick="saveOfficeHoursModal()" class="btn btn-primary" id="saveButton">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- school address modal -->
+    <div class="modal fade" id="school-address-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-title">Update School Address</h5>
+          </div>
+          <div class="modal-body" id="modal-body">
+
+            <form id="school-address-form" method="PUT" action=`/web-content/school-address/update/{{school_address.id}}/`>
+                {% csrf_token %}
+                {{school_address_form|crispy}}
+            </form>
+            <br>
+            <div>
+                <span>Full Address:</span>
+                <strong>
+                    <span id="street-address">{{school_address.street}}</span>, <span id="town-address">{{school_address.town}}</span>, <span id="city-address">{{school_address.city}}</span>, <span id="province-address">{{school_address.province}}</span>
+                </strong>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" for="school-address-form" onClick="saveSchoolAddressModal()" class="btn btn-primary" id="saveButton">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- school contact numbers modal -->
+    <div class="modal fade" id="add-school-contact-number-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="add-school-contact-number-modal-title">Add School Contact Number</h5>
+          </div>
+          <div class="modal-body" id="add-school-contact-number-modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" onClick="saveAddSchoolContactNumberForm()" for="add-school-contact-number-form"  class="btn btn-primary" id="saveButton">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
 <script type="text/javascript">
 
     //home contents
@@ -150,5 +366,17 @@
     var schoolLogo = "{{logo.image.url|safe}}"
     var missionId = "{{mission.id}}"
     var visionId = "{{vision.id}}"
+    var officeHoursId = "{{office_hours.id}}"
+    var schoolAddressId = "{{school_address.id}}"
+
+    // ClassicEditor
+    //     .create( document.querySelector( '#mission-content' ) )
+    //     .then( editor => {
+    //             console.log( editor );
+    //     } )
+    //     .catch( error => {
+    //             console.error( error );
+    //     } );
+
 </script>
 {% endblock %}

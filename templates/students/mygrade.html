@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<div class="container">
+    <h1>My grades</h1><br>
+  <div class="row">
+    <div class="col-sm mb-5">
+        <table class="table table-sm">
+          <thead>
+              <tr>
+                <h5>First Quarter</h5>
+              </tr>
+
+            <tr>
+              <th scope="col">Subject</th>
+              <th scope="col">Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for s in student_grades %}
+              {% if s.period.period == 'First Quarter' %}
+            <tr>
+              <td>{{s.subject}}</td>
+              <td>{{s.grade}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+          </table>
+    </div>
+
+    <div class="col-sm mb-5">
+        <table class="table table-sm">
+          <thead>
+              <tr>
+                  <h5>Second Quarter</h5>
+              </tr>
+            <tr>
+              <th scope="col">Subject</th>
+              <th scope="col">Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for s in student_grades %}
+              {% if s.period.period == 'Second Quarter' %}
+            <tr>
+              <td>{{s.subject}}</td>
+              <td>{{s.grade}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+          </table>
+    </div>
+    <div class="col-sm mb-5">
+        <table class="table table-sm">
+          <thead>
+              <tr>
+                  <h5>Third Quarter</h5>
+              </tr>
+            <tr>
+              <th scope="col">Subject</th>
+              <th scope="col">Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for s in student_grades %}
+              {% if s.period.period == 'Third Quarter' %}
+            <tr>
+              <td>{{s.subject}}</td>
+              <td>{{s.grade}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+          </table>
+    </div>
+    <div class="col-sm mb-5">
+        <table class="table table-sm">
+          <thead>
+              <tr>
+                  <h5>Fourth Quarter</h5>
+              </tr>
+            <tr>
+              <th scope="col">Subject</th>
+              <th scope="col">Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for s in student_grades %}
+              {% if s.period.period == 'Fourth Quarter' %}
+            <tr>
+              <td>{{s.subject}}</td>
+              <td>{{s.grade}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+          </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+import sys
 from accounts.models import User, StaffProfile, Blog
 import datetime
 from forms.accounts import generate_password, generate_username
@@ -90,6 +91,8 @@ class CreateProfileSerializer(serializers.ModelSerializer):
             read_only = True,
             default=today
         )
+    middle_name = serializers.CharField(max_length= 70,allow_blank= True,)
+
 
     class Meta:
         model = StaffProfile
@@ -142,6 +145,7 @@ class CreateProfileSerializer(serializers.ModelSerializer):
         year = validated_data.pop('dob_year')
 
         staff = StaffProfile.objects.create(user=user, **validated_data)
+        print(sys.stderr, 'Username: ', username, 'Password', password)
         return staff
 
 
