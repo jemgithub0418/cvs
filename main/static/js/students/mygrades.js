@@ -9,7 +9,7 @@ selectPeriod.addEventListener('change', function(){
     })
     .then((resp) => resp.json())
     .then(function(data){
-
+        console.log(data)
         // this is where i input the table
         var gradeDiv = document.getElementById('grade-div');
         gradeDiv.innerHTML = ""
@@ -57,6 +57,7 @@ selectPeriod.addEventListener('change', function(){
         // create body of table and append to table
         var tableBody = document.createElement('tbody')
         tableBody.id = 'table-body'
+
         gradeTable.append(tableBody)
 
 
@@ -99,15 +100,10 @@ selectPeriod.addEventListener('change', function(){
             else if(selectPeriod.selectedIndex == 0){
                 gradeDiv.innerHTML = "Select a school period."
             }
-            else{
-                gradeDiv.innerHTML = "No available grades yet."
-            }
+            // else{
+            //     gradeDiv.innerHTML = "No available grades yet."
+            // }
         }
-
-
-
-
-
 
     })
 

@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.renderers import BrowsableAPIRenderer,TemplateHTMLRenderer
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from forms.students import StudentGradeForm, UploadCSVFileForm
+from forms.students import StudentGradeForm, UploadCSVFileForm, SubjectForm
 
 
 # Create your views here.
@@ -36,6 +36,7 @@ def mygrades(request, pk):
 
 def mystudents(request, pk):
     csv_form = UploadCSVFileForm()
+    subject_for_template = SubjectForm(user= request.user)
     if request.method == "POST":
         csv_form = UploadCSVFileForm(request.POST or None, request.FILES or None)
         if csv_form.is_valid():
@@ -47,7 +48,8 @@ def mystudents(request, pk):
             save_csv = GradeCSVFile.objects.create(file_name= uploaded_file)
 
             csv_file = GradeCSVFile.objects.get(grades_uploaded= False)
-
+            csv_file.grades_uploaded = True
+            csv_file.save()
             grade_list = []
             #read csv file
             with open(csv_file.file_name.path, 'r') as file:
@@ -79,8 +81,7 @@ def mystudents(request, pk):
                         #     )
                 new_grades = StudentGrade.objects.bulk_create(grade_list)
 
-            csv_file.grades_uploaded = True
-            csv_file.save()
+
 
     teacher_section = Section.objects.get(adviser_id=pk)
     my_students = Student.objects.filter(section=teacher_section).prefetch_related("enrolled_subjects").select_related(
@@ -95,10 +96,17 @@ def mystudents(request, pk):
         "my_students" : my_students,
         "grade_form": student_grade_form,
         "csv_form": csv_form,
+        'subject_for_template': subject_for_template,
     }
     return render(request, 'students/mystudents.html', context)
 
 def generatecsvfile(request, pk):
+    if request.method == "POST":
+        subject_form = SubjectForm(user= request.user, data=request.POST or None)
+        if subject_form.is_valid():
+            subject = subject_form.cleaned_data.get('subject')
+            print(subject)
+
     response = HttpResponse(content_type = 'text/csv')
     section = Section.objects.get(adviser_id= pk)
     response['Content-Disposition'] = 'attachment; filename=myclass-'+ section.section_name +'.csv'
@@ -124,8 +132,10 @@ def generatecsvfile(request, pk):
     writer.writerow(heading_list)
 
     for student in students:
-        for subject in student.enrolled_subjects.all():
-            writer.writerow([student.profile.LRN_or_student_number,student.profile.first_name, student.profile.last_name, subject.subject_name])
+        subject_list = student.enrolled_subjects.filter(student= student)
+        for sub in subject_list:
+            if sub.subject_name == subject.subject_name:
+                writer.writerow([student.profile.LRN_or_student_number,student.profile.first_name, student.profile.last_name, sub.subject_name])
 
     return response
 

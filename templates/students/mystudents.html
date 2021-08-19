@@ -8,18 +8,29 @@
 
 {% block content %}
 <div class="container" style="max-width: 60%;margin-top: 3rem;">
-    <h4>My Advisory Class</h4> <a href="{% url 'generate-csv-for-my-class' user.id %}">generate csv file template for my class</a>
-    <br><br>
-    <div class="row" style="max-width: 50%;">
-        <form action="{% url 'my-students' user.id %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <h6>Upload grades using .csv file</h6>
-            {{csv_form.period | as_crispy_field}}
-            <div style="display: flex;">
-            {{csv_form.file_name | as_crispy_field}}
-            <button style="height: 35px; margin-top: 1rem;" type="submit" class="btn btn-sm btn-outline-secondary">Upload</button>
-            </div>
-        </form>
+    <h4>My Advisory Class</h4>
+    <br>
+    <div class="row" style="max-width: 100%;">
+        <div class="col-6">
+            <form action="{% url 'generate-csv-for-my-class' user.id %}" method="POST">
+                {% csrf_token %}
+                <h6>Template for Uploading Grades</h6>
+                {{subject_for_template|crispy}}
+                <br>
+                <button class="btn btn-outline-secondary" type="submit">Generate CSV Template</button>
+            </form>
+        </div>
+        <div class="col-6">
+            <form action="{% url 'my-students' user.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h6>Upload grades using .csv file</h6>
+                {{csv_form.period | as_crispy_field}}
+                <div style="display: flex;">
+                {{csv_form.file_name | as_crispy_field}}
+                <button style="height: 35px; margin-top: 1.2rem; margin-left: 0rem;" type="submit" class="btn btn-sm btn-outline-secondary">Upload</button>
+                </div>
+            </form>
+        </div>
     </div>
     <br>
 

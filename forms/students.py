@@ -107,3 +107,17 @@ class UploadCSVFileForm(forms.Form):
         label="School Period",
     )
     file_name = forms.FileField()
+
+
+class SubjectForm(forms.Form):
+    subject = forms.ModelChoiceField(
+            required= True,
+            widget= forms.Select,
+            label = "Select a subject for the template",
+            queryset= None,
+        )
+
+    def __init__(self, user, *args, **kwargs):
+        super(SubjectForm, self).__init__(*args, **kwargs)
+        section = Section.objects.get(adviser=user)
+        self.fields['subject'].queryset = Subject.objects.filter(year_level= section.year_level)
